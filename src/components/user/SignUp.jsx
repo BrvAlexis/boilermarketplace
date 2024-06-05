@@ -61,7 +61,7 @@ export default function SignUp() {
           user: {
             email: email,
             password: password,
-            password_confirmation: password_confirmation
+            
           }
         }),
       });
