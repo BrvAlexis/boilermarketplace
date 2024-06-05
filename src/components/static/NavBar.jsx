@@ -1,4 +1,5 @@
 import * as React from 'react';
+import LogOut from '../user/LogOut';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -31,6 +32,7 @@ export default function ButtonAppBar() {
           <Button color="inherit" component={RouterLink} to="/signup">
             Inscription
           </Button>
+          <div><LogOut /></div> 
           
         </Toolbar>
       </AppBar>

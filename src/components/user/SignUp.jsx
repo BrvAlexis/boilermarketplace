@@ -1,4 +1,8 @@
-import * as React from 'react';
+import React, { useState } from 'react';
+import { useAtom } from 'jotai';
+import { userAtom } from '../atom/atom';
+import Cookies from 'js-cookie';
+
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -31,14 +35,55 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignUp() {
-  const handleSubmit = (event) => {
+  const [, setUser] = useAtom(userAtom);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [password_confirmation, setPassword_Confirmation] = useState('');
+  const [error, setError] = useState('');
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    setError('');
+
     const data = new FormData(event.currentTarget);
     console.log({
       email: data.get('email'),
       password: data.get('password'),
     });
+
+    try {
+      const response = await fetch('http://localhost:3000/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user: {
+            email: email,
+            password: password,
+            password_confirmation: password_confirmation
+          }
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+
+        Cookies.set('token', response.headers.get("Authorization"));
+        Cookies.set('id', data.user.id);
+
+        setUser({
+          isLoggedIn: true,
+        });
+      } else {
+        setError('Erreur lors de la création du compte');
+      }
+    } catch (error) {
+      setError('Erreur lors de la création du compte');
+    }
   };
+
+
 
   return (
     <ThemeProvider theme={defaultTheme}>

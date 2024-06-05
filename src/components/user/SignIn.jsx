@@ -1,4 +1,7 @@
-import * as React from 'react';
+import React, { useState } from 'react';
+import { useAtom } from 'jotai';
+import { userAtom } from '../atom/atom';
+import Cookies from 'js-cookie';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -31,14 +34,53 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignIn() {
-  const handleSubmit = (event) => {
+  const [, setUser] = useAtom(userAtom);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+
+  const handleLogin = async (event) => {
     event.preventDefault();
+
     const data = new FormData(event.currentTarget);
     console.log({
       email: data.get('email'),
       password: data.get('password'),
     });
+
+    // Effectuer la requête fetch vers le backend Strapi pour l'authentification
+    try {
+      const response = await fetch('http://localhost:3000/users/sign_in', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user: {
+            email: email,
+            password: password
+          }
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+
+        Cookies.set('token', response.headers.get("Authorization"));
+        Cookies.set('id', data.user.id);
+
+        setUser({
+          isLoggedIn: true,
+        });
+      } else {
+        setError('Identifiants invalides');
+      }
+    } catch (error) {
+      setError('Une erreur s\'est produite');
+    }
   };
+
+  
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -58,7 +100,7 @@ export default function SignIn() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={handleLogin} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
