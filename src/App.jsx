@@ -1,14 +1,15 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import CssBaseline from '@mui/material/CssBaseline';
-import SignUp from './page/SignUp.jsx';
-import SignIn from './page/SignIn.jsx';
-import AppBar from './components/AppBar.jsx';
-
+import SignUp from './components/user/SignUp.jsx';
+import SignIn from './components/user/SignIn.jsx';
+import AppBar from './components/static/NavBar.jsx';
+import ForgetPassword from './components/user/ForgetPassword.jsx';
+import ResetPassword from './components/user/ResetPassword.jsx';
 import Card from './components/Card.jsx';
-import Footer from './components/Footer.jsx';
-import Hero from './page/Hero.jsx';
-import MultiCard from './page/MultiCard.jsx';
+import Footer from './components/static/Footer.jsx';
+import Hero from './components/home/Hero.jsx';
+import MultiCard from './components/home/MultiCard.jsx';
 
 function App() {
   return (
@@ -27,7 +28,8 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/card" element={<Card />} />
-        
+        <Route path="/forgetpassword" element={<ForgetPassword />} />
+        <Route path="/resetpassword" element={<ResetPassword />} />
       </Routes>
       <Footer />
     </BrowserRouter>

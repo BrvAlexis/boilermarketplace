@@ -1,6 +1,6 @@
 import React from 'react';
 import { Grid } from '@mui/material';
-import Card from '../components/Card.jsx';
+import Card from '../Card.jsx';
 
 const CardGrid = () => {
   // Supposons que vous ayez un tableau d'objets représentant vos données de carte
