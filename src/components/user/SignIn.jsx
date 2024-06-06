@@ -17,52 +17,6 @@ import { useAtom } from 'jotai';
 import { userAtom } from '../atom/atom';
 import Cookies from 'js-cookie';
 
-function Copyright(props) {
-  const [, setUser] = useAtom(userAtom);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-
-  const handleLogin = async (event) => {
-    event.preventDefault();
-    // Effectuer la requête fetch vers le backend Rails pour l'authentification
-    try {
-      const response = await postData("/users/sign_in",{
-        user: {
-        email: email,
-        password: password
-      }})
-      if (response.ok) {
-        const data = await response.json();
-
-        Cookies.set('token', response.headers.get("Authorization"));
-        Cookies.set('id', data.user.id);
-
-        setUser({
-          isLoggedIn: true,
-        });
-      } else {
-        setError('Identifiants invalides');
-      }
-    } catch (error) {
-      setError('Une erreur s\'est produite');
-    }
-  };
-
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
-
-// TODO remove, this demo shouldn't need to reset the theme.
-
 const defaultTheme = createTheme();
 
 export default function SignIn() {
@@ -73,28 +27,15 @@ export default function SignIn() {
 
   const handleLogin = async (event) => {
     event.preventDefault();
-
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-
-    // Effectuer la requête fetch vers le backend Strapi pour l'authentification
+    // Effectuer la requête fetch vers le backend Rails pour l'authentification
+    console.log(email,password)
     try {
-      const response = await fetch('http://localhost:3000/users/sign_in', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          user: {
-            email: email,
-            password: password
-          }
-        }),
-      });
-
+      const response = await postData("/users/sign_in",{
+        user: {
+        email: email,
+        password: password
+      }}
+    )
       if (response.ok) {
         const data = await response.json();
 
@@ -142,6 +83,8 @@ export default function SignIn() {
               name="email"
               autoComplete="email"
               autoFocus
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <TextField
               margin="normal"
@@ -152,6 +95,8 @@ export default function SignIn() {
               type="password"
               id="password"
               autoComplete="current-password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -179,7 +124,6 @@ export default function SignIn() {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
   );

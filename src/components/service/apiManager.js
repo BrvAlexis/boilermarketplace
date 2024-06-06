@@ -4,9 +4,9 @@ const baseUrl = 'http://localhost:3000';
 const authToken = Cookies.get("token");
 
 const headersData = {
-    if(authToken){
-        Authorization: `Bearer ${authToken}`
-    },
+    //if(authToken){
+     //   Authorization: `Bearer ${authToken}`
+   // },
     "Content-Type": "application/json"
 }
 
@@ -32,9 +32,10 @@ export async function getData(objectUrl,body){
 }
 
 export async function postData(objectUrl,body){
+    console.log(objectUrl,body)
     const json = await ky.post(baseUrl +objectUrl, {
         headers: headersData,
-        json:{body},
+        json: body
     }).json();
     return json;
 }
