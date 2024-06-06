@@ -12,10 +12,12 @@ import {
 } from '@mui/material';
 import LockResetIcon from '@mui/icons-material/LockReset';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { signUpdateData } from '../service/apiManager'
 
 const theme = createTheme();
 
 export default function ResetPassword() {
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
@@ -26,11 +28,16 @@ export default function ResetPassword() {
       return;
     }
     // Ici, intégrez la logique pour changer le mot de passe
-    console.log('Le mot de passe a été changé pour :', password);
-    // Exemple de changement de mot de passe (à remplacer par votre API ou service d'authentification)
-    // await changeUserPassword(password);
-    // Connectez l'utilisateur
-    // await loginUser(email, password);
+    try{
+      const reponse = await signUpdateData("/users/",{
+        user: {
+          email: email,
+          password: password
+        }
+      })
+    }catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -52,6 +59,19 @@ export default function ResetPassword() {
             Réinitialisation du mot de passe
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+          <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="email"
+              label="Votre Email"
+              type="email"
+              id="email"
+              autoComplete="new-email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
             <TextField
               variant="outlined"
               margin="normal"

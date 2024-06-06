@@ -23,7 +23,7 @@ export async function getData(objectUrl,body){
 }
 
 export async function postData(objectUrl,body){
-    console.log(objectUrl,body)
+    //console.log(objectUrl,body)
     const json = await ky.post(baseUrl +objectUrl, {
         headers: getHeaders(),
         json: body
@@ -32,8 +32,8 @@ export async function postData(objectUrl,body){
 }
 
 export async function signData(objectUrl,body){
-    console.log(objectUrl,body)
-    const json = await ky.post(baseUrl +objectUrl, {
+    //console.log(objectUrl,body)
+    const json = await ky.post(baseUrl + objectUrl, {
         headers: getHeaders(),
         json: body
     });
@@ -43,11 +43,20 @@ export async function signData(objectUrl,body){
 }
 
 export async function decoData(objectUrl){
-    console.log(getHeaders());
     const json = await ky.delete(baseUrl +objectUrl, {
         headers: getHeaders()
     });
-    //console.log("json : ",json);
     Cookies.remove('token');
+    return json.json();
+}
+
+export async function signUpdateData(objectUrl,body){
+    //console.log(objectUrl,body)
+    const json = await ky.patch(baseUrl +objectUrl, {
+        headers: getHeaders(),
+        json: body
+    });
+    //console.log("json : ",json);
+    Cookies.set('token', json.headers.get("Authorization"));
     return json.json();
 }

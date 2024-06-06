@@ -1,8 +1,4 @@
 import React, { useState } from 'react';
-import { useAtom } from 'jotai';
-import { userAtom } from '../atom/atom';
-import Cookies from 'js-cookie';
-
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -17,69 +13,37 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
-
-// TODO remove, this demo shouldn't need to reset the theme.
+import {signData} from '../service/apiManager';
+import { useAtom } from 'jotai';
+import { userAtom } from '../atom/atom';
 
 const defaultTheme = createTheme();
 
 export default function SignUp() {
-  const [, setUser] = useAtom(userAtom);
+  const [user, setUser] = useAtom(userAtom);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [password_confirmation, setPassword_Confirmation] = useState('');
   const [error, setError] = useState('');
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setError('');
-
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-
+    // Effectuer la requête fetch vers le backend Rails pour l'authentification
     try {
-      const response = await fetch('http://localhost:3000/users', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          user: {
-            email: email,
-            password: password,
-            
-          }
-        }),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-
-        Cookies.set('token', response.headers.get("Authorization"));
-        Cookies.set('id', data.user.id);
-
-        setUser({
-          isLoggedIn: true,
-        });
-      } else {
-        setError('Erreur lors de la création du compte');
-      }
+      const response = await signData("/users",{
+        user: {
+        email: email,
+        password: password
+      }}
+    )
+    setUser({
+      email: response.user.email,
+      id:response.user.id,
+      isLoggedIn: true,
+    })
+    //localStorage.setItem("user",JSON.stringify(user))
+    //console.log(response);
     } catch (error) {
-      setError('Erreur lors de la création du compte');
+      setError('Une erreur s\'est produite');
     }
   };
 
@@ -105,27 +69,6 @@ export default function SignUp() {
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="given-name"
-                  name="firstName"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
-                />
-              </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
@@ -134,6 +77,8 @@ export default function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -145,12 +90,8 @@ export default function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive inspiration, marketing promotions and updates via email."
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </Grid>
             </Grid>
@@ -171,7 +112,6 @@ export default function SignUp() {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
   );
