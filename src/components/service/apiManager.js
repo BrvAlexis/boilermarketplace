@@ -10,18 +10,6 @@ const headersData = {
     "Content-Type": "application/json"
 }
 
-//export function oldgetData(){
-//   const json = await ky(baseUrl, {
-//        retry: {
-//            limit: 10,
-//            methods: ['get'],
-//            statusCodes: [413],
-//            backoffLimit: 3000
-//        }
-//        }).json();
-//}
-// Soit cookie Existe
-
 export async function getData(objectUrl,body){
     const json = await ky.get(baseUrl +objectUrl, 
         {
@@ -38,4 +26,15 @@ export async function postData(objectUrl,body){
         json: body
     }).json();
     return json;
+}
+
+export async function signData(objectUrl,body){
+    console.log(objectUrl,body)
+    const json = await ky.post(baseUrl +objectUrl, {
+        headers: headersData,
+        json: body
+    });
+    //console.log("json : ",json);
+    Cookies.set('token', json.headers.get("Authorization"));
+    return json.json();
 }

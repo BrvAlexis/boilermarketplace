@@ -12,15 +12,14 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { postData } from '../service/apiManager';
+import { signData } from '../service/apiManager';
 import { useAtom } from 'jotai';
 import { userAtom } from '../atom/atom';
-import Cookies from 'js-cookie';
 
 const defaultTheme = createTheme();
 
 export default function SignIn() {
-  const [, setUser] = useAtom(userAtom);
+  const [user, setUser] = useAtom(userAtom);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -28,32 +27,24 @@ export default function SignIn() {
   const handleLogin = async (event) => {
     event.preventDefault();
     // Effectuer la requête fetch vers le backend Rails pour l'authentification
-    console.log(email,password)
     try {
-      const response = await postData("/users/sign_in",{
+      const response = await signData("/users/sign_in",{
         user: {
         email: email,
         password: password
       }}
     )
-      if (response.ok) {
-        const data = await response.json();
-
-        Cookies.set('token', response.headers.get("Authorization"));
-        Cookies.set('id', data.user.id);
-
-        setUser({
-          isLoggedIn: true,
-        });
-      } else {
-        setError('Identifiants invalides');
-      }
+    setUser({
+      email: response.user.email,
+      id:response.user.id,
+      isLoggedIn: true,
+    })
+    //localStorage.setItem("user",JSON.stringify(user))
+    //console.log(response);
     } catch (error) {
       setError('Une erreur s\'est produite');
     }
   };
-
-  
 
   return (
     <ThemeProvider theme={defaultTheme}>

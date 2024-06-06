@@ -8,8 +8,13 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link as RouterLink } from 'react-router-dom';
+import { useAtom } from 'jotai';
+import { userAtom } from '../atom/atom';
 
 export default function ButtonAppBar() {
+  const [user] = useAtom(userAtom);
+  console.log(user)
+  
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
