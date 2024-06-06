@@ -3,20 +3,18 @@ import { useAtom } from 'jotai';
 import { userAtom } from '../atom/atom';
 import Cookies from 'js-cookie';
 import Button from '@mui/material/Button';
+import {decoData} from '../service/apiManager'
 
 function LogoutButton() {
-  const [, setUser] = useAtom(userAtom);
+  const [user, setUser] = useAtom(userAtom);
 
   const handleLogout = () => {
+    decoData("/users/sign_out");
     setUser({
-      id: '',
+      email: "",
+      id: "",
       isLoggedIn: false,
-      token: '',
     });
-
-    Cookies.remove('token');
-    Cookies.remove('id');
-
   };
 
   return (

@@ -1,19 +1,22 @@
 import ky from 'ky';
 import Cookies from 'js-cookie';
+
 const baseUrl = 'http://localhost:3000';
-const authToken = Cookies.get("token");
 
-const headersData = {
-    //if(authToken){
-     //   Authorization: `Bearer ${authToken}`
-   // },
-    "Content-Type": "application/json"
+function getHeaders() {
+    const authToken = Cookies.get("token");
+    const headers = {
+        "Content-Type": "application/json"
+    };
+    if (authToken) {
+        headers['Authorization'] = authToken;
+    }
+    return headers;
 }
-
 export async function getData(objectUrl,body){
     const json = await ky.get(baseUrl +objectUrl, 
         {
-        //    headers: headersData,
+        //    headers: getHeaders(),
         //    json: {body},
     }).json();
     return json;
@@ -22,7 +25,7 @@ export async function getData(objectUrl,body){
 export async function postData(objectUrl,body){
     console.log(objectUrl,body)
     const json = await ky.post(baseUrl +objectUrl, {
-        headers: headersData,
+        headers: getHeaders(),
         json: body
     }).json();
     return json;
@@ -31,10 +34,20 @@ export async function postData(objectUrl,body){
 export async function signData(objectUrl,body){
     console.log(objectUrl,body)
     const json = await ky.post(baseUrl +objectUrl, {
-        headers: headersData,
+        headers: getHeaders(),
         json: body
     });
     //console.log("json : ",json);
     Cookies.set('token', json.headers.get("Authorization"));
+    return json.json();
+}
+
+export async function decoData(objectUrl){
+    console.log(getHeaders());
+    const json = await ky.delete(baseUrl +objectUrl, {
+        headers: getHeaders()
+    });
+    //console.log("json : ",json);
+    Cookies.remove('token');
     return json.json();
 }
