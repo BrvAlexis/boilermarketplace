@@ -1,6 +1,9 @@
 import {useEffect, useState} from 'react';
 import { Grid } from '@mui/material';
-import Card from '../Card.jsx';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import { Button, CardActionArea, CardActions } from '@mui/material';
 import { getData } from '../service/apiManager.js';
 
 const CardGrid = () => {
@@ -24,9 +27,25 @@ const CardGrid = () => {
 
   return (
     <Grid container spacing={4}>
-      {products.map((data, index) => (
-        <Grid item key={index} xs={12} sm={6} md={4}>
-          <Card {...data} />
+      {products.map((product) => (
+        <Grid item key={product.id} xs={12} sm={6} md={4}>
+              <Card sx={{ maxWidth: 345 }}>
+                <CardActionArea>
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                    {product.title} {product.price}€
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                    {product.description}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+                <CardActions>
+                  <Button size="small" color="primary">
+                    Share
+                  </Button>
+                </CardActions>
+              </Card>
         </Grid>
       ))}
     </Grid>

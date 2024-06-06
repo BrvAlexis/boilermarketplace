@@ -29,7 +29,7 @@ export default function ButtonAppBar() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            BoilerFront
+            <a href="./">BoilerFront</a>
           </Typography>
           <Button color="inherit" component={RouterLink} to="/signin">
             Connexion
