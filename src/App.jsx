@@ -1,17 +1,20 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import CssBaseline from '@mui/material/CssBaseline';
-import SignUp from './components/user/SignUp.jsx';
-import SignIn from './components/user/SignIn.jsx';
-import AppBar from './components/static/NavBar.jsx';
-import ForgetPassword from './components/user/ForgetPassword.jsx';
-import ResetPassword from './components/user/ResetPassword.jsx';
-import Card from './components/Card.jsx';
-import Footer from './components/static/Footer.jsx';
-import Hero from './components/home/Hero.jsx';
-import MultiCard from './components/home/MultiCard.jsx';
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import CssBaseline from "@mui/material/CssBaseline";
+import SignUp from "./components/user/SignUp.jsx";
+import SignIn from "./components/user/SignIn.jsx";
+import AppBar from "./components/static/NavBar.jsx";
+import ForgetPassword from "./components/user/ForgetPassword.jsx";
+import ResetPassword from "./components/user/ResetPassword.jsx";
+import Card from "./components/Card.jsx";
+import Footer from "./components/static/Footer.jsx";
+import Hero from "./components/home/Hero.jsx";
+import MultiCard from "./components/home/MultiCard.jsx";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import ProductNewEdit from "./components/product/ProductNew.jsx";
 
-import ShowProduct from './components/product/ShowProduct.jsx';
+import ShowProduct from "./components/product/ShowProduct.jsx";
 
 function App() {
   return (
@@ -19,15 +22,17 @@ function App() {
       <CssBaseline />
       <AppBar />
       <ToastContainer />
-      
-      
+
       <Routes>
-        <Route path="/" element={
-          <>
-            <Hero />
-            <MultiCard />
-          </>
-        } />
+        <Route
+          path="/"
+          element={
+            <>
+              <Hero />
+              <MultiCard />
+            </>
+          }
+        />
         <Route path="/productnewedit" element={<ProductNewEdit />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
