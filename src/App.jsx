@@ -10,7 +10,7 @@ import Card from './components/Card.jsx';
 import Footer from './components/static/Footer.jsx';
 import Hero from './components/home/Hero.jsx';
 import MultiCard from './components/home/MultiCard.jsx';
-
+import ShowProduct from './components/product/ShowProduct.jsx';
 function App() {
   return (
     <BrowserRouter>
@@ -28,6 +28,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/card" element={<Card />} />
+        <Route path="/product/:productId" component={<ShowProduct />} />
         <Route path="/forgetpassword" element={<ForgetPassword />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
       </Routes>
