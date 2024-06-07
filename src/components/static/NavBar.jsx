@@ -77,14 +77,14 @@ export default function ButtonAppBar() {
                 <MenuItem
                   onClick={handleClose}
                   component={RouterLink}
-                  to="/productnewedit"
+                  to="/productnew"
                 >
                   Créer une annonce
                 </MenuItem>
                 <MenuItem
                   onClick={handleClose}
                   component={RouterLink}
-                  to="/edit-ad"
+                  to="/productedit"
                 >
                   Modifier une annonce
                 </MenuItem>
