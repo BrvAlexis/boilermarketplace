@@ -10,7 +10,8 @@ import Card from './components/Card.jsx';
 import Footer from './components/static/Footer.jsx';
 import Hero from './components/home/Hero.jsx';
 import MultiCard from './components/home/MultiCard.jsx';
-import ProductNewEdit from './components/product/ProductNew.jsx';
+import ProductNew from './components/product/ProductNew.jsx';
+import ProductEdit from './components/product/ProductEdit.jsx';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -29,7 +30,8 @@ function App() {
             <MultiCard />
           </>
         } />
-        <Route path="/productnewedit" element={<ProductNewEdit />} />
+        <Route path="/productnew" element={<ProductNew />} />
+        <Route path="/productedit" element={<ProductEdit />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/card" element={<Card />} />
