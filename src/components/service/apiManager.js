@@ -60,3 +60,4 @@ export async function signUpdateData(objectUrl,body){
     Cookies.set('token', json.headers.get("Authorization"));
     return json.json();
 }
+

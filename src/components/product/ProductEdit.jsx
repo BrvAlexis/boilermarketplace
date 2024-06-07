@@ -1,12 +1,21 @@
 import { useState, useEffect } from 'react';
 import { Avatar, Button, CssBaseline, TextField, Typography, Container, Box, Grid } from '@mui/material';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
-//import { updateData } from '../service/apiManager'; // Assurez-vous d'avoir une fonction pour mettre à jour les données
-import { useNavigate } from 'react-router-dom';
+import { useAtom } from 'jotai';
+import { userAtom } from '../atom/atom.js';
+import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { getData } from '../service/apiManager';
 
-export default function EditRealEstateAd({ adId }) { // adId est l'identifiant de l'annonce à modifier
+
+export default function EditRealEstateAd() {
+  const [user] = useAtom(userAtom);
+  //dynamic route
+  const { productId } = useParams();
+  console.log("user id: ", user.id);
   const navigate = useNavigate();
+  
+  const [product, setProduct] = useState(null);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
@@ -14,9 +23,28 @@ export default function EditRealEstateAd({ adId }) { // adId est l'identifiant d
   const [existingImages, setExistingImages] = useState([]); // Pour stocker les images existantes
 
   useEffect(() => {
-    // Ici, vous pouvez charger les données existantes de l'annonce à partir de votre API
-    // et les définir dans les états appropriés (setTitle, setDescription, setPrice, setExistingImages)
-  }, [adId]);
+    const fetchProductData = async () => {
+      try {
+        if (user.isLoggedIn && user.id && productId !== 'undefined') {
+          const productData = await getData(`/users/${user.id}/products/${productId}`);
+          setProduct(productData);
+          setTitle(productData.title);
+          setDescription(productData.description);
+          setPrice(productData.price);
+          setExistingImages(productData.images);
+        } else {
+          toast.error('Vous devez être connecté et avoir un ID de produit valide pour modifier une annonce.');
+        }
+      } catch (error) {
+        console.error('Erreur lors du chargement des données du produit :', error);
+        toast.error('Échec du chargement des données de l\'annonce.');
+      }
+    };
+  
+    if (user.isLoggedIn && user.id) {
+      fetchProductData();
+    }
+  }, [user, productId]);
 
   const handleImageChange = (event) => {
     if (event.target.files.length > 2) {
@@ -36,17 +64,7 @@ export default function EditRealEstateAd({ adId }) { // adId est l'identifiant d
       formData.append(`images[${index}]`, image);
     });
 
-    try {
-      const response = await updateData(`/real_estate_ads/${adId}`, formData); // Utilisez l'URL relative appropriée
-      console.log(response);
-      toast.success('Annonce modifiée avec succès !', {
-        onClose: () => navigate('/')
-      });
-    } catch (error) {
-      console.error('Erreur lors de la modification de l\'annonce :', error);
-      toast.error('Échec de la modification de l\'annonce.');
-    }
-  };
+  };  
 
   return (
     <Container component="main" maxWidth="sm">
@@ -116,18 +134,15 @@ export default function EditRealEstateAd({ adId }) { // adId est l'identifiant d
               Rajouter des images
             </Button>
           </label>
-          <Grid container spacing={2} sx={{ mt: 2 }}>
-            {existingImages.map((image, index) => (
-              <Grid item xs={4} key={index}>
-                <img src={image.url} alt={`image-${index}`} style={{ width: '100%' }} />
-              </Grid>
-            ))}
-            {images.map((image, index) => (
-              <Grid item xs={4} key={index}>
-                <img src={URL.createObjectURL(image)} alt={`image-${index}`} style={{ width: '100%' }} />
-              </Grid>
-            ))}
-          </Grid>
+          {existingImages && existingImages.length > 0 ? (
+                    existingImages.map((image, index) => (
+                      <Grid item xs={4} key={index}>
+                        <img src={image.url} alt={`image-${index}`} style={{ width: '100%' }} />
+                      </Grid>
+                    ))
+                  ) : (
+                    <p>Chargement des images...</p>
+                  )}
           <Button
             type="submit"
             fullWidth
