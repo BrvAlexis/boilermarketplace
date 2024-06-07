@@ -10,12 +10,15 @@ import Card from './components/Card.jsx';
 import Footer from './components/static/Footer.jsx';
 import Hero from './components/home/Hero.jsx';
 import MultiCard from './components/home/MultiCard.jsx';
+
 import ShowProduct from './components/product/ShowProduct.jsx';
+
 function App() {
   return (
     <BrowserRouter>
       <CssBaseline />
       <AppBar />
+      <ToastContainer />
       
       
       <Routes>
@@ -25,6 +28,7 @@ function App() {
             <MultiCard />
           </>
         } />
+        <Route path="/productnewedit" element={<ProductNewEdit />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/card" element={<Card />} />
