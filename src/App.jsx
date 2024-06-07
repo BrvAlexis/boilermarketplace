@@ -13,6 +13,7 @@ import MultiCard from './components/home/MultiCard.jsx';
 import ProductNewEdit from './components/product/ProductNewEdit.jsx';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Profile from './components/user/Profile.jsx';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
             <MultiCard />
           </>
         } />
+        <Route path="/profile/:urlprofile" element={<Profile/>}/>
         <Route path="/productnewedit" element={<ProductNewEdit />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />

@@ -64,7 +64,7 @@ export default function ButtonAppBar() {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose} component={RouterLink} to="/profile">Profil</MenuItem>
+                <MenuItem onClick={handleClose} component={RouterLink} to={`/profile/${user.id}`}>Profile</MenuItem>
                 <MenuItem onClick={handleClose} component={RouterLink} to="/productnewedit">Créer une annonce</MenuItem>
                 <MenuItem onClick={handleClose} component={RouterLink} to="/edit-ad">Modifier une annonce</MenuItem>
                 <MenuItem onClick={handleClose}><LogOut /></MenuItem>
