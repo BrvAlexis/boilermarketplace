@@ -10,10 +10,13 @@ import Card from './components/Card.jsx';
 import Footer from './components/static/Footer.jsx';
 import Hero from './components/home/Hero.jsx';
 import MultiCard from './components/home/MultiCard.jsx';
-import ProductNewEdit from './components/product/ProductNewEdit.jsx';
+import ProductNew from './components/product/ProductNew.jsx';
+import ProductEdit from './components/product/ProductEdit.jsx';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Profile from './components/user/Profile.jsx';
+
+import ShowProduct from './components/product/ShowProduct.jsx';
 
 function App() {
   return (
@@ -21,8 +24,7 @@ function App() {
       <CssBaseline />
       <AppBar />
       <ToastContainer />
-      
-      
+
       <Routes>
         <Route path="/" element={
           <>
@@ -31,10 +33,13 @@ function App() {
           </>
         } />
         <Route path="/profile/:urlprofile" element={<Profile/>}/>
-        <Route path="/productnewedit" element={<ProductNewEdit />} />
+        {/* <Route path="/productnewedit" element={<ProductNewEdit />} /> */}
+        <Route path="/productnew" element={<ProductNew />} />
+        <Route path="/productedit" element={<ProductEdit />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/card" element={<Card />} />
+        <Route path="/product/:productId" element={<ShowProduct />} />
         <Route path="/forgetpassword" element={<ForgetPassword />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
       </Routes>
