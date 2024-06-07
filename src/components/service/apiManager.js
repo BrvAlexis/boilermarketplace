@@ -60,3 +60,11 @@ export async function signUpdateData(objectUrl,body){
     Cookies.set('token', json.headers.get("Authorization"));
     return json.json();
 }
+
+export async function editUserData(body){
+    const json = await ky.patch(`${baseUrl}/users`, {
+        headers: getHeaders(),
+        json: body
+    }).json();
+    return json;
+}
