@@ -10,10 +10,15 @@ import Card from './components/Card.jsx';
 import Footer from './components/static/Footer.jsx';
 import Hero from './components/home/Hero.jsx';
 import MultiCard from './components/home/MultiCard.jsx';
+<<<<<<< HEAD
 import ProductNew from './components/product/ProductNew.jsx';
 import ProductEdit from './components/product/ProductEdit.jsx';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+=======
+
+import ShowProduct from './components/product/ShowProduct.jsx';
+>>>>>>> 2108955ce6ffa5d05bf7d08c4c6412633a13f6a3
 
 function App() {
   return (
@@ -35,6 +40,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/card" element={<Card />} />
+        <Route path="/product/:productId" component={<ShowProduct />} />
         <Route path="/forgetpassword" element={<ForgetPassword />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
       </Routes>
