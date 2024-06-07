@@ -113,7 +113,7 @@ export default function EditRealEstateAd({ adId }) { // adId est l'identifiant d
           />
           <label htmlFor="raised-button-file">
             <Button variant="contained" component="span" fullWidth sx={{ mt: 2 }}>
-              Télécharger des images
+              Rajouter des images
             </Button>
           </label>
           <Grid container spacing={2} sx={{ mt: 2 }}>
