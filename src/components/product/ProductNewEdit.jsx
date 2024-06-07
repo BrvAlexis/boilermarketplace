@@ -2,10 +2,13 @@ import { useState } from 'react';
 import { Avatar, Button, CssBaseline, TextField, Typography, Container, Box, Grid } from '@mui/material';
 
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
-
+import { postData } from '../service/apiManager';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 
 export default function CreateRealEstateAd() {
+  const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
@@ -17,9 +20,27 @@ export default function CreateRealEstateAd() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // Ici, vous pouvez gérer la soumission du formulaire, par exemple en envoyant les données à votre serveur
-    console.log({ title, description, price, images });
+    const adData = {
+      title: title,
+      description: description,
+      price: price
+      
+    };
+
+    try {
+      const response = await postData('/products', adData); 
+      console.log(response);
+      toast.success('Annonce créée avec succès !', {
+        onClose: () => navigate('/')
+    });
+      // Gérez la réponse de l'API ici, par exemple en redirigeant l'utilisateur ou en affichant un message de succès
+    } catch (error) {
+      console.error('Erreur lors de la publication de l\'annonce :', error);
+      toast.error('Échec de la création de l\'annonce.');
+      // Gérez l'erreur ici, par exemple en affichant un message d'erreur à l'utilisateur
+    }
   };
+
 
   return (
     

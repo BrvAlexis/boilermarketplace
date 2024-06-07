@@ -11,12 +11,15 @@ import Footer from './components/static/Footer.jsx';
 import Hero from './components/home/Hero.jsx';
 import MultiCard from './components/home/MultiCard.jsx';
 import ProductNewEdit from './components/product/ProductNewEdit.jsx';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
     <BrowserRouter>
       <CssBaseline />
       <AppBar />
+      <ToastContainer />
       
       
       <Routes>
