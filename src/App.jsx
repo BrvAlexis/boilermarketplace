@@ -26,8 +26,7 @@ function App() {
       <CssBaseline />
       <AppBar />
       <ToastContainer />
-      
-      
+
       <Routes>
         <Route path="/" element={
           <>
@@ -40,7 +39,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/card" element={<Card />} />
-        <Route path="/product/:productId" component={<ShowProduct />} />
+        <Route path="/product/:productId" element={<ShowProduct />} />
         <Route path="/forgetpassword" element={<ForgetPassword />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
       </Routes>

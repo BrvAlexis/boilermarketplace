@@ -1,23 +1,22 @@
-import { useState } from 'react';
-import LogOut from '../user/LogOut';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import { Link as RouterLink } from 'react-router-dom';
-import { useAtom } from 'jotai';
-import { userAtom } from '../atom/atom';
+import { useState } from "react";
+import LogOut from "../user/LogOut";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import { Link as RouterLink } from "react-router-dom";
+import { useAtom } from "jotai";
+import { userAtom } from "../atom/atom";
 
 export default function ButtonAppBar() {
   const [user] = useAtom(userAtom);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  console.log(user)
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -26,7 +25,6 @@ export default function ButtonAppBar() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -41,7 +39,12 @@ export default function ButtonAppBar() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component={RouterLink} to='/' sx={{ flexGrow: 1 }}>
+          <Typography
+            variant="h6"
+            component={RouterLink}
+            to="/"
+            sx={{ flexGrow: 1 }}
+          >
             BoilerFront
           </Typography>
           {user.isLoggedIn ? (
@@ -53,21 +56,41 @@ export default function ButtonAppBar() {
                 id="menu-appbar"
                 anchorEl={anchorEl}
                 anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
+                  vertical: "top",
+                  horizontal: "right",
                 }}
                 keepMounted
                 transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
+                  vertical: "top",
+                  horizontal: "right",
                 }}
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose} component={RouterLink} to="/profile">Profil</MenuItem>
-                <MenuItem onClick={handleClose} component={RouterLink} to="/productnew">Créer une annonce</MenuItem>
-                <MenuItem onClick={handleClose} component={RouterLink} to="/productedit">Modifier une annonce</MenuItem>
-                <MenuItem onClick={handleClose}><LogOut /></MenuItem>
+                <MenuItem
+                  onClick={handleClose}
+                  component={RouterLink}
+                  to="/profile"
+                >
+                  Profil
+                </MenuItem>
+                <MenuItem
+                  onClick={handleClose}
+                  component={RouterLink}
+                  to="/productnewedit"
+                >
+                  Créer une annonce
+                </MenuItem>
+                <MenuItem
+                  onClick={handleClose}
+                  component={RouterLink}
+                  to="/edit-ad"
+                >
+                  Modifier une annonce
+                </MenuItem>
+                <MenuItem onClick={handleClose}>
+                  <LogOut />
+                </MenuItem>
               </Menu>
             </>
           ) : (
