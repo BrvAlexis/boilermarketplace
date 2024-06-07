@@ -11,14 +11,17 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+
 import { signData } from '../service/apiManager';
 import { useAtom } from 'jotai';
 import { userAtom } from '../atom/atom';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-const defaultTheme = createTheme();
 
 export default function SignIn() {
+  const navigate = useNavigate();
   const [user, setUser] = useAtom(userAtom);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -38,16 +41,19 @@ export default function SignIn() {
       email: response.user.email,
       id:response.user.id,
       isLoggedIn: true,
-    })
+    });
+    toast.success('Connexion réussie !');
+      navigate('/'); // Redirige vers la page d'accueil
     //localStorage.setItem("user",JSON.stringify(user))
     //console.log(response);
     } catch (error) {
       setError('Une erreur s\'est produite');
+      toast.error('Échec de la connexion.');
     }
   };
 
   return (
-    <ThemeProvider theme={defaultTheme}>
+    
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -116,6 +122,6 @@ export default function SignIn() {
           </Box>
         </Box>
       </Container>
-    </ThemeProvider>
+    
   );
 }
