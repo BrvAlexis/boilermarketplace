@@ -21,7 +21,7 @@ const Profile = () => {
   useEffect(()=> {
     const profileData = async() => {
       try{
-        const data = await getData(`/users/${user.id}`);
+        const data = await getData(`/users/${urlprofile}`);
         console.log("user: ", data)
         setProfile(data);
 
