@@ -15,6 +15,7 @@ import ProductEdit from './components/product/ProductEdit.jsx';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Profile from './components/user/Profile.jsx';
+import EditProfile from './components/user/EditProfile.jsx';
 
 import ShowProduct from './components/product/ShowProduct.jsx';
 
@@ -33,6 +34,7 @@ function App() {
           </>
         } />
         <Route path="/profile/:urlprofile" element={<Profile/>}/>
+        <Route path="/profile/edit" element={<EditProfile/>}/>
         <Route path="/productnew" element={<ProductNew />} />
         <Route path="/productedit" element={<ProductEdit />} />
         <Route path="/signup" element={<SignUp />} />
@@ -41,6 +43,7 @@ function App() {
         <Route path="/product/:productId" element={<ShowProduct />} />
         <Route path="/forgetpassword" element={<ForgetPassword />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
+
       </Routes>
       <Footer />
     </BrowserRouter>

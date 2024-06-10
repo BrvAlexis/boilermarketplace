@@ -14,9 +14,10 @@ function getHeaders() {
     return headers;
 }
 export async function getData(objectUrl,body){
-    const json = await ky.get(baseUrl +objectUrl, 
+    console.log(objectUrl);
+    const json = await ky.get(baseUrl + objectUrl, 
         {
-        //    headers: getHeaders(),
+           headers: getHeaders(),
         //    json: {body},
     }).json();
     return json;
@@ -57,6 +58,6 @@ export async function signUpdateData(objectUrl,body){
         json: body
     });
     //console.log("json : ",json);
-    Cookies.set('token', json.headers.get("Authorization"));
+    // Cookies.set('token', json.headers.get("Authorization"));
     return json.json();
 }
