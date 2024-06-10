@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { getData, productDeleteData } from '../service/apiManager.js';
 import { useAtom } from 'jotai';
 import { userAtom } from '../atom/atom.js';
@@ -11,7 +11,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 
 const Profile = () => {
-  const navigate = useNavigate();
+  
   const [user] = useAtom(userAtom);
   const [profile,setProfile] = useState("")
   const [profileProducts,setProfileProducts] = useState([])
@@ -49,7 +49,7 @@ const Profile = () => {
     try {
       await productDeleteData(`/products/${productIdToDelete}`);
       toast.success('Annonce supprimée avec succès.');
-      navigate('/'); // Redirection vers la page d'accueil
+      
     } catch (error) {
       console.error('Erreur lors de la suppression de l\'annonce :', error);
       toast.error('Échec de la suppression de l\'annonce.');
