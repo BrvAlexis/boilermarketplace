@@ -67,8 +67,8 @@ export async function productUpdateData(objectUrl, body) {
         headers: getHeaders(),
         json: body
       });
-        
-      return await response.json();
+
+      return response.json();
     } catch (error) {
       console.error('Erreur lors de la mise à jour du produit :', error);
       throw error;
