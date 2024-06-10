@@ -1,15 +1,17 @@
 import {useEffect, useState} from 'react';
 import { useParams } from 'react-router-dom';
-import { getData } from '../service/apiManager.js';
+import { getData, productDeleteData } from '../service/apiManager.js';
 import { useAtom } from 'jotai';
 import { userAtom } from '../atom/atom.js';
 import { Link } from 'react-router-dom';
 
 import { Typography, Paper, Grid, Button  } from '@mui/material';
+import { toast } from 'react-toastify';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 
 const Profile = () => {
+  
   const [user] = useAtom(userAtom);
   const [profile,setProfile] = useState("")
   const [profileProducts,setProfileProducts] = useState([])
@@ -41,6 +43,17 @@ const Profile = () => {
     profileData();
     productsData();
   },[user, urlprofile])
+
+  const handleDelete = async (productIdToDelete) => {
+    try {
+      await productDeleteData(`/products/${productIdToDelete}`);
+      toast.success('Annonce supprimée avec succès.');
+      
+    } catch (error) {
+      console.error('Erreur lors de la suppression de l\'annonce :', error);
+      toast.error('Échec de la suppression de l\'annonce.');
+    }
+  };
 
   return(
     <>
@@ -91,9 +104,10 @@ const Profile = () => {
                     <Link to={`/product/${product.id}`}>
                       <Button variant="contained" color="primary">SEE</Button>
                     </Link>
-                    <Link to="/productnewedit">
+                    <Link to={`/productedit/${product.id}`}>
                       <Button variant="contained"  color="secondary">EDIT</Button>
                     </Link>
+                      <Button onClick={() => handleDelete(product.id)} variant="contained" color="error">DELETE</Button>
                     
                   </CardContent>
                 </Card>

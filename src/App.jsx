@@ -36,7 +36,7 @@ function App() {
         <Route path="/profile/:urlprofile" element={<Profile/>}/>
         <Route path="/profile/edit" element={<EditProfile/>}/>
         <Route path="/productnew" element={<ProductNew />} />
-        <Route path="/productedit" element={<ProductEdit />} />
+        <Route path="/productedit/:productId" element={<ProductEdit />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/card" element={<Card />} />
