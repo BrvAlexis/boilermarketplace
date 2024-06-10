@@ -60,3 +60,17 @@ export async function signUpdateData(objectUrl,body){
     Cookies.set('token', json.headers.get("Authorization"));
     return json.json();
 }
+
+export async function productUpdateData(objectUrl, body) {
+    try {
+      const response = await ky.patch(baseUrl + objectUrl, {
+        headers: getHeaders(),
+        json: body
+      });
+
+      return response.json();
+    } catch (error) {
+      console.error('Erreur lors de la mise à jour du produit :', error);
+      throw error;
+    }
+  }

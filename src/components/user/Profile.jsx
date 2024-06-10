@@ -31,6 +31,10 @@ const Profile = () => {
     const productsData = async() => {
       try{
         const data = await getData(`/products?user_id=${urlprofile}`);
+<<<<<<< HEAD
+=======
+        //const data = await getData(`/products?user_id=28`);
+>>>>>>> master
         console.log("products :", data)
         setProfileProducts(data);
 
@@ -86,7 +90,7 @@ const Profile = () => {
                     <Link to={`/product/${product.id}`}>
                       <Button variant="contained" color="primary">SEE</Button>
                     </Link>
-                    <Link to="/productnewedit">
+                    <Link to={`/productedit/${product.id}`}>
                       <Button variant="contained"  color="secondary">EDIT</Button>
                     </Link>
                     
