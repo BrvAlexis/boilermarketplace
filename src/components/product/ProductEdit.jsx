@@ -5,7 +5,7 @@ import { useAtom } from 'jotai';
 import { userAtom } from '../atom/atom.js';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { getData, signUpdateData } from '../service/apiManager';
+import { getData, productUpdateData } from '../service/apiManager';
 
 
 export default function EditRealEstateAd() {
@@ -65,10 +65,13 @@ export default function EditRealEstateAd() {
   
     try {
       // Utilisation de la fonction signUpdateData pour envoyer la requête PATCH
-      await signUpdateData(`/users/${user.id}/products/${productId}`, { product: productData });
+      await productUpdateData(`/products/${productId}`, productData);
+
+      // Log des cookies après l'envoi de la requête
+    console.log('Cookies après la requête PATCH:', document.cookie);
       
       toast.success('Annonce mise à jour avec succès.');
-      navigate(`/profile/${user.id}`); // Redirection vers la page de profil de l'utilisateur
+      navigate('/'); // Redirection vers la page d'acceuil'
     } catch (error) {
       console.error('Erreur lors de la mise à jour de l\'annonce :', error);
       toast.error('Échec de la mise à jour de l\'annonce.');
