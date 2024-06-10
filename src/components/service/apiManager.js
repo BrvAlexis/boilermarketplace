@@ -67,13 +67,7 @@ export async function productUpdateData(objectUrl, body) {
         headers: getHeaders(),
         json: body
       });
-  
-      // Vérifiez si un nouvel en-tête d'autorisation est présent
-      const newAuthToken = response.headers.get("Authorization");
-      if (newAuthToken) {
-        Cookies.set('token', newAuthToken);
-      }
-  
+        
       return await response.json();
     } catch (error) {
       console.error('Erreur lors de la mise à jour du produit :', error);
