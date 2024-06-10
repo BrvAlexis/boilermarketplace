@@ -74,3 +74,22 @@ export async function productUpdateData(objectUrl, body) {
       throw error;
     }
   }
+
+  export async function productDeleteData(objectUrl) {
+    try {
+      const response = await ky.delete(baseUrl + objectUrl, {
+        headers: getHeaders()
+      });
+  
+      // Si le statut de la réponse indique qu'il n'y a pas de contenu, ne tentez pas de parser le JSON
+      if (response.status === 204 || response.status === 200) {
+        return null; // ou retournez une valeur appropriée indiquant le succès
+      } else {
+        // Tentez de parser le JSON seulement si la réponse contient du contenu
+        return response.json();
+      }
+    } catch (error) {
+      console.error('Erreur lors de la suppression du produit :', error);
+      throw error;
+    }
+  }
