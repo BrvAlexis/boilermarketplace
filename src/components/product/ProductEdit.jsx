@@ -5,14 +5,14 @@ import { useAtom } from 'jotai';
 import { userAtom } from '../atom/atom.js';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { getData } from '../service/apiManager';
+import { getData, signUpdateData } from '../service/apiManager';
 
 
 export default function EditRealEstateAd() {
   const [user] = useAtom(userAtom);
   //dynamic route
   const { productId } = useParams();
-  console.log("user id: ", user.id);
+  
   const navigate = useNavigate();
   
   const [product, setProduct] = useState(null);
@@ -56,15 +56,26 @@ export default function EditRealEstateAd() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const formData = new FormData();
-    formData.append('title', title);
-    formData.append('description', description);
-    formData.append('price', price);
-    images.forEach((image, index) => {
-      formData.append(`images[${index}]`, image);
-    });
+    
+    const productData = {
+      title: title,
+      description: description,
+      price: price
+    };
+  
+    try {
+      // Utilisation de la fonction signUpdateData pour envoyer la requête PATCH
+      await signUpdateData(`/users/${user.id}/products/${productId}`, { product: productData });
+      
+      toast.success('Annonce mise à jour avec succès.');
+      navigate(`/profile/${user.id}`); // Redirection vers la page de profil de l'utilisateur
+    } catch (error) {
+      console.error('Erreur lors de la mise à jour de l\'annonce :', error);
+      toast.error('Échec de la mise à jour de l\'annonce.');
+    }
+  };
 
-  };  
+    
 
   return (
     <Container component="main" maxWidth="sm">
