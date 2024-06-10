@@ -5,7 +5,7 @@ import { useAtom } from 'jotai';
 import { userAtom } from '../atom/atom.js';
 import { Link } from 'react-router-dom';
 
-import { Typography, Paper, Grid, Button, CardActionArea, CardActions  } from '@mui/material';
+import { Typography, Paper, Grid, Button  } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 
@@ -30,8 +30,8 @@ const Profile = () => {
     };
     const productsData = async() => {
       try{
-        // const data = await getData(`/products?user_id=${urlprofile}`);
-        const data = await getData(`/products?user_id=28`);
+        const data = await getData(`/products?user_id=${urlprofile}`);
+        // const data = await getData(`/products?user_id=28`);
         console.log("products :", data)
         setProfileProducts(data);
 
@@ -41,7 +41,7 @@ const Profile = () => {
     };
     profileData();
     productsData();
-  },[user])
+  },[user, urlprofile])
 
   return(
     <>
@@ -84,7 +84,7 @@ const Profile = () => {
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
                     </Typography>
-                    <Link to="/">
+                    <Link to={`/product/${product.id}`}>
                       <Button variant="contained" color="primary">SEE</Button>
                     </Link>
                     <Link to="/productnewedit">
