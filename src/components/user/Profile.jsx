@@ -16,7 +16,7 @@ const Profile = () => {
   const [profile,setProfile] = useState("")
   const [profileProducts,setProfileProducts] = useState([])
   //dynamic route
-  const { urlprofile, productId } = useParams();
+  const { urlprofile } = useParams();
   console.log("user id: ", user.id);
 
   useEffect(()=> {
