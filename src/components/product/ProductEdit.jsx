@@ -5,7 +5,7 @@ import { useAtom } from 'jotai';
 import { userAtom } from '../atom/atom.js';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { getData, productUpdateData } from '../service/apiManager';
+import { getData, productUpdateData, productDeleteData } from '../service/apiManager';
 
 
 export default function EditRealEstateAd() {
@@ -75,6 +75,17 @@ export default function EditRealEstateAd() {
     } catch (error) {
       console.error('Erreur lors de la mise à jour de l\'annonce :', error);
       toast.error('Échec de la mise à jour de l\'annonce.');
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      await productDeleteData(`/products/${productId}`);
+      toast.success('Annonce supprimée avec succès.');
+      navigate('/'); // Redirection vers la page d'accueil
+    } catch (error) {
+      console.error('Erreur lors de la suppression de l\'annonce :', error);
+      toast.error('Échec de la suppression de l\'annonce.');
     }
   };
 
@@ -164,6 +175,16 @@ export default function EditRealEstateAd() {
             sx={{ mt: 3, mb: 2 }}
           >
             Modifier l'annonce
+          </Button>
+
+          <Button
+            onClick={handleDelete}
+            fullWidth
+            variant="contained"
+            color="error"
+            sx={{ mt: 2 }}
+          >
+            Supprimer l'annonce
           </Button>
         </Box>
       </Box>
