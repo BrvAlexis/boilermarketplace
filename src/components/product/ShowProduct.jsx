@@ -40,7 +40,7 @@ function ShowProduct() {
         </Box>
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Button variant="contained" color="primary" component={Link} to={`/profile/${product.user_id}`}>
-            Contactez le propriétaire
+            Voir le profil / Contactez le propriétaire
           </Button>
           <Button variant="outlined" color="secondary" component={Link} to={"/"}>
             Retour à la liste des produits

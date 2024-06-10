@@ -17,13 +17,12 @@ const Profile = () => {
   const [profileProducts,setProfileProducts] = useState([])
   //dynamic route
   const { urlprofile } = useParams();
-  console.log("user id: ", user.id);
 
   useEffect(()=> {
     const profileData = async() => {
       try{
-        const data = await getData(`/users/${user.id}`);
-        console.log("user: ",data)
+        const data = await getData(`/users/${urlprofile}`);
+        console.log("user: ", data)
         setProfile(data);
 
       }catch(error){
@@ -33,8 +32,8 @@ const Profile = () => {
     const productsData = async() => {
       try{
         const data = await getData(`/products?user_id=${urlprofile}`);
-        //const data = await getData(`/products?user_id=28`);
-        console.log("products :", data)
+        // const data = await getData(`/products?user_id=28`);
+        // console.log("products :", data)
         setProfileProducts(data);
 
       }catch(error){
@@ -74,6 +73,11 @@ const Profile = () => {
             <Typography variant="body1" component="p">
               Email: {profile.email}
             </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Link to="/profile/edit">
+              <Button variant="contained"  color="secondary">EDIT</Button>
+            </Link>
           </Grid>
         </Grid>
       </Paper>
