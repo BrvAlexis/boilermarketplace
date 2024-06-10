@@ -34,6 +34,9 @@ function ShowProduct() {
           <Typography variant="body1" color="text.secondary">
             {product.description}
           </Typography>
+          <Typography variant="body1" color="text.secondary">
+          {product.user?.email ? product.user.email : "Pas d'email"}
+          </Typography>
         </Box>
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Button variant="contained" color="primary" component={Link} to={`/profile/${product.user_id}`}>
