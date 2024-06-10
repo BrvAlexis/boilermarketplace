@@ -70,7 +70,7 @@ export default function ButtonAppBar() {
                 <MenuItem
                   onClick={handleClose}
                   component={RouterLink}
-                  to="/profile"
+                  to={`/profile/${user.id}`}
                 >
                   Profil
                 </MenuItem>

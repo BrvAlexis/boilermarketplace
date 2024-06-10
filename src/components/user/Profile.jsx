@@ -30,8 +30,7 @@ const Profile = () => {
     };
     const productsData = async() => {
       try{
-        // const data = await getData(`/products?user_id=${urlprofile}`);
-        const data = await getData(`/products?user_id=28`);
+        const data = await getData(`/products?user_id=${urlprofile}`);
         console.log("products :", data)
         setProfileProducts(data);
 
