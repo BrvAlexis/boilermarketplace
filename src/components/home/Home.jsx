@@ -1,6 +1,6 @@
 import Hero from "./Hero"
 import MultiCard from "./MultiCard"
-import { Container } from "@mui/material"
+import { Button, Box } from "@mui/material"
 
 export default function Home() {
   return(
@@ -8,6 +8,10 @@ export default function Home() {
       <Hero />
       <br />
       <MultiCard />
+      <div className="showMapButton">
+        <Button>Afficher la carte</Button>
+      </div>
+      
     </>
   )
 }
