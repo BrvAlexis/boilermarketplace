@@ -2,12 +2,16 @@ import { useEffect, useState } from "react";
 import { getData } from "../service/apiManager.js";
 import { Container, Typography, Box, Button, Paper } from '@mui/material';
 import { BrowserRouter as Router, Route, Link, useParams } from "react-router-dom";
+import { useAtom } from 'jotai';
+import { userAtom } from '../atom/atom.js';
 import Map from "./Map.jsx";
 
 //passer en props le product id, puis après recheck le link
 function ShowProduct() {
   const { productId } = useParams();
   const [product, setProduct] = useState([]);
+  const [user] = useAtom(userAtom);
+
   // Supposons que vous ayez un tableau d'objets représentant vos données de carte
   useEffect(() => {
     const productData = async () => {
@@ -35,14 +39,22 @@ function ShowProduct() {
           <Typography variant="body1" color="text.secondary">
             {product.description}
           </Typography>
-          <Typography variant="body1" color="text.secondary">
-          {product.user?.email ? product.user.email : "Pas d'email"}
-          </Typography>
+          {user.isLoggedIn ? 
+            <Typography variant="body1" color="text.secondary">
+            {product.user?.email ? product.user.email : "Pas d'email"}
+            </Typography>
+          : ""}
         </Box>
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        {user.isLoggedIn ?           
           <Button variant="contained" color="primary" component={Link} to={`/profile/${product.user_id}`}>
             Voir le profil / Contactez le propriétaire
           </Button>
+          :
+          <Button variant="contained" color="primary" component={Link} to={`/profile/${product.user_id}`}disabled>
+            Voir le profil / Contactez le propriétaire
+          </Button>
+          }
           <Button variant="outlined" color="secondary" component={Link} to={"/"}>
             Retour à la liste des produits
           </Button>
