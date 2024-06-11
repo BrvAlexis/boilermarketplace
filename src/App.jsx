@@ -22,6 +22,7 @@ import ShowProduct from './components/product/ShowProduct.jsx';
 
 import { useAtomValue } from 'jotai';
 import { userAtom } from './components/atom/atom';
+import Home from './components/home/Home.jsx';
 
 const PrivateRoute = ({ children }) => {
 
@@ -44,12 +45,7 @@ function App() {
       <ToastContainer />
 
       <Routes>
-        <Route path="/" element={
-          <>
-            <Hero />
-            <MultiCard />
-          </>
-        } />
+        <Route path="/" element={<Home/>} />
         <Route path="/profile/:urlprofile" element={<PrivateRoute><Profile /></PrivateRoute>}/>
         <Route path="/profile/edit" element={<PrivateRoute><EditProfile /></PrivateRoute>}/>
         <Route path="/productnew" element={<ProductNew />} />
