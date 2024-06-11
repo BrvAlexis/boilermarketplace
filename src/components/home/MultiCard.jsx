@@ -24,10 +24,10 @@ const CardGrid = () => {
   // ... vos données de carte
 
   return (
-    <Container component="main" maxWidth="lg">
-      <Grid container spacing={4}>
+    <Container component="main" maxWidth="xl">
+      <Grid container spacing={2}>
         {products.map((product) => (
-          <Grid item key={product.id} xs={12} sm={6} md={4}>
+          <Grid item key={product.id} xs={12} sm={6} md={4} lg={3}>
             <Card sx={{ maxWidth: 345 }}>
               <CardActionArea component={Link} to={`/product/${product.id}`}>
                 <CardContent>
