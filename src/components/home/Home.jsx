@@ -1,8 +1,10 @@
 import { useState } from "react"
 import Hero from "./Hero"
 import MultiCard from "./MultiCard"
-import { Button, Box } from "@mui/material"
+import { Button, Box, Container } from "@mui/material"
 import Map from "../product/Map"
+import SearchBar from "./SearchBar.jsx";
+
 export default function Home() {
   const [mapIsOpenned, setMapIsOpenned] = useState(false)
   return(
@@ -15,6 +17,9 @@ export default function Home() {
       <div>
         <Hero />
         <br />
+        <Container sx={{ marginBottom: '20px' }}>
+          <SearchBar/>
+        </Container>
         {
           mapIsOpenned ? <Map/> : <MultiCard />
         }

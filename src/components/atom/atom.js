@@ -9,3 +9,4 @@ export const userAtom = atomWithStorage(
   isLoggedIn: false,
 });
 
+export const searchAtom = atom({})

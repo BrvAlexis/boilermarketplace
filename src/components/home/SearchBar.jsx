@@ -1,14 +1,32 @@
-import { TextField, InputAdornment, Box, FormControl, FormLabel, FormControlLabel, RadioGroup, Radio } from '@mui/material';
+import { TextField, InputAdornment, Box, FormControl, FormLabel, FormControlLabel, RadioGroup, Radio, Button } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { useState } from 'react';
+import { useAtom } from 'jotai';
+import { searchAtom } from '../atom/atom';
+
 
 function SearchBar() {
   const [city,setCity] = useState("")
   const [typeOfGood,setTypeOfGood] = useState("")
+  const [searchArgument, setSearchArgument] = useAtom(searchAtom)
+  const [price,setPrice] = useState("")
+  const [area,setArea] = useState("")
+  const [numberOfRoom,setNumberOfRoom] = useState("")
+  const [parking,setParking] = useState("")
 
   const handlesubmit = (event) => {
     event.preventDefault();
+    console.log(typeOfGood);
     console.log(city);
+    setSearchArgument(
+      {"property_type":typeOfGood,
+        "price":price,
+        "area":area,
+        "number_of_rooms":numberOfRoom,
+        "parking":parking,
+        "city":city,
+      }
+    )
   }
 
   return (
@@ -29,18 +47,27 @@ function SearchBar() {
               onChange={(e) => setCity(e.target.value)}
             />
           </Box>
-          <Box >
+          <Box sx={{marginRight: 2}}>
             <FormLabel>Type de logement</FormLabel>
             <RadioGroup
               name="type-of-good"
               value={typeOfGood}
               onChange={(e)=>setTypeOfGood(e.target.value)}
             >
-              <FormControlLabel value="Maison" control={<Radio />} label="Maison" sx={{ mb: -2 }} />
-              <FormControlLabel value="Appartement" control={<Radio />} label="Appartement" />
+              <FormControlLabel value="maison" control={<Radio />} label="Maison" sx={{ mb: -2 }} />
+              <FormControlLabel value="appartement" control={<Radio />} label="Appartement" />
             </RadioGroup>
           </Box>
-          
+          <Box>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Submit
+            </Button>
+          </Box>
         </Box>
       </FormControl>
     </Box>
