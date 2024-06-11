@@ -85,7 +85,7 @@ const Profile = () => {
 
     <div>
       <Paper elevation={3} style={{ padding: '20px', margin: '20px' }}>
-      {profileProducts.length === 0 ? (
+      { !profile.owner ? (
         <h1>You don&apos;t have a product</h1>
       ) : (
         <>
@@ -104,11 +104,15 @@ const Profile = () => {
                     <Link to={`/product/${product.id}`}>
                       <Button variant="contained" color="primary">SEE</Button>
                     </Link>
-                    <Link to={`/productedit/${product.id}`}>
-                      <Button variant="contained"  color="secondary">EDIT</Button>
-                    </Link>
-                      <Button onClick={() => handleDelete(product.id)} variant="contained" color="error">DELETE</Button>
-                    
+                    {user.id === profile.id ?
+                    <>
+                      <Link to={`/productedit/${product.id}`}>
+                        <Button variant="contained"  color="secondary">EDIT</Button>
+                      </Link>
+                        <Button onClick={() => handleDelete(product.id)} variant="contained" color="error">DELETE</Button>
+                    </>
+                       : 
+                      ''}
                   </CardContent>
                 </Card>
               </Grid>
