@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getData } from "../service/apiManager.js";
 import { Container, Typography, Box, Button, Paper } from '@mui/material';
 import { BrowserRouter as Router, Route, Link, useParams } from "react-router-dom";
+import Map from "./Map.jsx";
 
 //passer en props le product id, puis après recheck le link
 function ShowProduct() {
@@ -47,6 +48,12 @@ function ShowProduct() {
           </Button>
         </Box>
       </Paper>
+      <Paper elevation={3} sx={{ p: 4 }}>
+        <Box sx={{ mb: 3 }}>
+          <Map/>
+        </Box>
+      </Paper>
+
     </Container>
   );
 }
