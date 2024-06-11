@@ -82,14 +82,14 @@ export default function CreateRealEstateAd() {
         </Typography>
 
         <FormControl component="fieldset" sx={{ mt: 2 }}>
-  <FormLabel component="legend">Type de bien</FormLabel>
-  <RadioGroup row name="property_type" value={adData.property_type} onChange={handleInputChange}>
-    
-    
-    <FormControlLabel value="appartement" control={<Radio />} label="Appartement" />
-    <FormControlLabel value="maison" control={<Radio />} label="Maison" />
-  </RadioGroup>
-</FormControl>
+        <FormLabel component="legend">Type de bien</FormLabel>
+        <RadioGroup row name="property_type" value={adData.property_type} onChange={handleInputChange}>
+          
+          
+          <FormControlLabel value="appartement" control={<Radio />} label="Appartement" />
+          <FormControlLabel value="maison" control={<Radio />} label="Maison" />
+        </RadioGroup>
+      </FormControl>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <TextField
             margin="normal"
@@ -176,15 +176,15 @@ export default function CreateRealEstateAd() {
             onChange={handleInputChange}
           />
           <FormControl component="fieldset" sx={{ mt: 2 }}>
-  <FormLabel component="legend">Catégorie</FormLabel>
-  <RadioGroup row name="category" value={adData.category} onChange={handleInputChange}>
-    <FormControlLabel value="ancien" control={<Radio />} label="Ancien" />
-    <FormControlLabel value="neuf" control={<Radio />} label="Neuf" />
-    <FormControlLabel value="projet en construction" control={<Radio />} label="Projet de construction" />
-  </RadioGroup>
-</FormControl>
+          <FormLabel component="legend">Catégorie</FormLabel>
+          <RadioGroup row name="category" value={adData.category} onChange={handleInputChange}>
+            <FormControlLabel value="ancien" control={<Radio />} label="Ancien" />
+            <FormControlLabel value="neuf" control={<Radio />} label="Neuf" />
+            <FormControlLabel value="projet en construction" control={<Radio />} label="Projet de construction" />
+          </RadioGroup>
+        </FormControl>
 
-                  <FormControl component="fieldset" sx={{ mt: 2 }}>
+          <FormControl component="fieldset" sx={{ mt: 2 }}>
           <FormLabel component="legend">Extérieur</FormLabel>
         <FormGroup row>
           <FormControlLabel

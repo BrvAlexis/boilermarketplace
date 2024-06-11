@@ -150,8 +150,8 @@ export default function EditRealEstateAd() {
     
     <FormControlLabel value="appartement" control={<Radio />} label="Appartement" />
     <FormControlLabel value="maison" control={<Radio />} label="Maison" />
-  </RadioGroup>
-</FormControl>
+      </RadioGroup>
+      </FormControl>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <TextField
             margin="normal"
@@ -238,139 +238,139 @@ export default function EditRealEstateAd() {
             onChange={handleInputChange}
           />
            <FormControl component="fieldset" sx={{ mt: 2 }}>
-  <FormLabel component="legend">Catégorie</FormLabel>
-  <RadioGroup row name="category" value={adData.category} onChange={handleInputChange}>
-    <FormControlLabel value="ancien" control={<Radio />} label="Ancien" />
-    <FormControlLabel value="neuf" control={<Radio />} label="Neuf" />
-    <FormControlLabel value="projet en construction" control={<Radio />} label="Projet de construction" />
-  </RadioGroup>
-</FormControl>
-          <FormControl component="fieldset" sx={{ mt: 2 }}>
-  <FormLabel component="legend">Extérieur</FormLabel>
-  <FormGroup row>
-    <FormControlLabel
-      control={<Checkbox checked={adData.pool} onChange={handleInputChange} name="pool" />}
-      label="Piscine"
-    />
-    <FormControlLabel
-      control={<Checkbox checked={adData.balcony} onChange={handleInputChange} name="balcony" />}
-      label="Balcon"
-    />
-    <FormControlLabel
-      control={<Checkbox checked={adData.terrace} onChange={handleInputChange} name="terrace" />}
-      label="Terrasse"
-    />
-    <FormControlLabel
-      control={<Checkbox checked={adData.garden} onChange={handleInputChange} name="garden" />}
-      label="Jardin"
-    />
-  </FormGroup>
-</FormControl>
+            <FormLabel component="legend">Catégorie</FormLabel>
+            <RadioGroup row name="category" value={adData.category} onChange={handleInputChange}>
+              <FormControlLabel value="ancien" control={<Radio />} label="Ancien" />
+              <FormControlLabel value="neuf" control={<Radio />} label="Neuf" />
+              <FormControlLabel value="projet en construction" control={<Radio />} label="Projet de construction" />
+            </RadioGroup>
+          </FormControl>
+                    <FormControl component="fieldset" sx={{ mt: 2 }}>
+            <FormLabel component="legend">Extérieur</FormLabel>
+            <FormGroup row>
+              <FormControlLabel
+                control={<Checkbox checked={adData.pool} onChange={handleInputChange} name="pool" />}
+                label="Piscine"
+              />
+              <FormControlLabel
+                control={<Checkbox checked={adData.balcony} onChange={handleInputChange} name="balcony" />}
+                label="Balcon"
+              />
+              <FormControlLabel
+                control={<Checkbox checked={adData.terrace} onChange={handleInputChange} name="terrace" />}
+                label="Terrasse"
+              />
+              <FormControlLabel
+                control={<Checkbox checked={adData.garden} onChange={handleInputChange} name="garden" />}
+                label="Jardin"
+              />
+              </FormGroup>
+            </FormControl>
 
-<FormControl component="fieldset" sx={{ mt: 2 }}>
-  <FormLabel component="legend">Dépendances</FormLabel>
-  <FormGroup row>
-    <FormControlLabel
-      control={<Checkbox checked={adData.garage} onChange={handleInputChange} name="garage" />}
-      label="Garage"
-    />
-    <FormControlLabel
-      control={<Checkbox checked={adData.parking} onChange={handleInputChange} name="parking" />}
-      label="Parking"
-    />
-    <FormControlLabel
-      control={<Checkbox checked={adData.cellar} onChange={handleInputChange} name="cellar" />}
-      label="Cave"
-    />
-    <FormControlLabel
-      control={<Checkbox checked={adData.basement} onChange={handleInputChange} name="basement" />}
-      label="Sous-sol"
-    />
-  </FormGroup>
-</FormControl>
+            <FormControl component="fieldset" sx={{ mt: 2 }}>
+              <FormLabel component="legend">Dépendances</FormLabel>
+              <FormGroup row>
+                <FormControlLabel
+                  control={<Checkbox checked={adData.garage} onChange={handleInputChange} name="garage" />}
+                  label="Garage"
+                />
+                <FormControlLabel
+                  control={<Checkbox checked={adData.parking} onChange={handleInputChange} name="parking" />}
+                  label="Parking"
+                />
+                <FormControlLabel
+                  control={<Checkbox checked={adData.cellar} onChange={handleInputChange} name="cellar" />}
+                  label="Cave"
+                />
+                <FormControlLabel
+                  control={<Checkbox checked={adData.basement} onChange={handleInputChange} name="basement" />}
+                  label="Sous-sol"
+                />
+              </FormGroup>
+            </FormControl>
 
-<FormControl component="fieldset" sx={{ mt: 2 }}>
-  <FormLabel component="legend">Mobilités</FormLabel>
-  <FormGroup row>
-    <FormControlLabel
-      control={<Checkbox checked={adData.elevator} onChange={handleInputChange} name="elevator" />}
-      label="Ascenseur"
-    />
-    <FormControlLabel
-      control={<Checkbox checked={adData.disabled_access} onChange={handleInputChange} name="disabled_access" />}
-      label="Accès Handicapé"
-    />
-  </FormGroup>
-</FormControl>
-
-<FormControl component="fieldset" sx={{ mt: 2 }}>
-  <FormLabel component="legend">Autres</FormLabel>
-  <FormGroup row>
-    <FormControlLabel
-      control={<Checkbox checked={adData.furnished} onChange={handleInputChange} name="furnished" />}
-      label="Meublé"
-    />
-    <FormControlLabel
-      control={<Checkbox checked={adData.caretaker} onChange={handleInputChange} name="caretaker" />}
-      label="Gardien"
-    />
-  </FormGroup>
-</FormControl>
-
-<FormControl component="fieldset" sx={{ mt: 2 }}>
-  <FormLabel component="legend">Diagnostic de Performance Énergétique</FormLabel>
-  <RadioGroup row name="energy_performance_diagnostic" value={adData.energy_performance_diagnostic} onChange={handleInputChange}>
-    <FormControlLabel value="A" control={<Radio />} label="A" />
-    <FormControlLabel value="B" control={<Radio />} label="B" />
-    <FormControlLabel value="C" control={<Radio />} label="C" />
-    <FormControlLabel value="D" control={<Radio />} label="D" />
-    <FormControlLabel value="E" control={<Radio />} label="E" />
-    <FormControlLabel value="F" control={<Radio />} label="F" />
-    <FormControlLabel value="G" control={<Radio />} label="G" />
-  </RadioGroup>
-</FormControl>
-          <input
-            accept="image/*"
-            style={{ display: 'none' }}
-            id="raised-button-file"
-            multiple
-            type="file"
-            onChange={handleImageChange}
+      <FormControl component="fieldset" sx={{ mt: 2 }}>
+        <FormLabel component="legend">Mobilités</FormLabel>
+        <FormGroup row>
+          <FormControlLabel
+            control={<Checkbox checked={adData.elevator} onChange={handleInputChange} name="elevator" />}
+            label="Ascenseur"
           />
-          <label htmlFor="raised-button-file">
-            <Button variant="contained" component="span" fullWidth sx={{ mt: 2 }}>
-              Rajouter des images
-            </Button>
-          </label>
-          {existingImages && existingImages.length > 0 ? (
-                    existingImages.map((image, index) => (
-                      <Grid item xs={4} key={index}>
-                        <img src={image.url} alt={`image-${index}`} style={{ width: '100%' }} />
-                      </Grid>
-                    ))
-                  ) : (
-                    <p>Chargement des images...</p>
-                  )}
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Modifier l'annonce
-          </Button>
+          <FormControlLabel
+            control={<Checkbox checked={adData.disabled_access} onChange={handleInputChange} name="disabled_access" />}
+            label="Accès Handicapé"
+          />
+        </FormGroup>
+      </FormControl>
 
-          <Button
-            onClick={handleDelete}
-            fullWidth
-            variant="contained"
-            color="error"
-            sx={{ mt: 2 }}
-          >
-            Supprimer l'annonce
-          </Button>
-        </Box>
-      </Box>
-    </Container>
+      <FormControl component="fieldset" sx={{ mt: 2 }}>
+        <FormLabel component="legend">Autres</FormLabel>
+        <FormGroup row>
+          <FormControlLabel
+            control={<Checkbox checked={adData.furnished} onChange={handleInputChange} name="furnished" />}
+            label="Meublé"
+          />
+          <FormControlLabel
+            control={<Checkbox checked={adData.caretaker} onChange={handleInputChange} name="caretaker" />}
+            label="Gardien"
+          />
+        </FormGroup>
+      </FormControl>
+
+      <FormControl component="fieldset" sx={{ mt: 2 }}>
+        <FormLabel component="legend">Diagnostic de Performance Énergétique</FormLabel>
+        <RadioGroup row name="energy_performance_diagnostic" value={adData.energy_performance_diagnostic} onChange={handleInputChange}>
+          <FormControlLabel value="A" control={<Radio />} label="A" />
+          <FormControlLabel value="B" control={<Radio />} label="B" />
+          <FormControlLabel value="C" control={<Radio />} label="C" />
+          <FormControlLabel value="D" control={<Radio />} label="D" />
+          <FormControlLabel value="E" control={<Radio />} label="E" />
+          <FormControlLabel value="F" control={<Radio />} label="F" />
+          <FormControlLabel value="G" control={<Radio />} label="G" />
+        </RadioGroup>
+      </FormControl>
+                <input
+                  accept="image/*"
+                  style={{ display: 'none' }}
+                  id="raised-button-file"
+                  multiple
+                  type="file"
+                  onChange={handleImageChange}
+                />
+                <label htmlFor="raised-button-file">
+                  <Button variant="contained" component="span" fullWidth sx={{ mt: 2 }}>
+                    Rajouter des images
+                  </Button>
+                </label>
+                {existingImages && existingImages.length > 0 ? (
+                          existingImages.map((image, index) => (
+                            <Grid item xs={4} key={index}>
+                              <img src={image.url} alt={`image-${index}`} style={{ width: '100%' }} />
+                            </Grid>
+                          ))
+                        ) : (
+                          <p>Chargement des images...</p>
+                        )}
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  Modifier l'annonce
+                </Button>
+
+                <Button
+                  onClick={handleDelete}
+                  fullWidth
+                  variant="contained"
+                  color="error"
+                  sx={{ mt: 2 }}
+                >
+                  Supprimer l'annonce
+                </Button>
+              </Box>
+            </Box>
+          </Container>
   );
 }
