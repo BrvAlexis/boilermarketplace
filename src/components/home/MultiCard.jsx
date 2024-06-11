@@ -17,20 +17,7 @@ const CardGrid = () => {
   const [hasMoreProduct, setHasMoreProduct] = useState(true);
   const [searchArgument, setSearchArgument] = useAtom(searchAtom)
 
-  //In this code, I've added a useRef hook to keep track of the previous searchArgument. I've also added a useEffect hook that updates this ref whenever searchArgument changes. Then, in another useEffect hook, I compare the current searchArgument with the previous one, and if they are different, I clear the products state.
-  //Note that I'm using JSON.stringify to compare the searchArgument objects, as JavaScript doesn't allow direct comparison of objects for equality. This method works as long as the objects don't have any nested objects or arrays, and the order of properties doesn't change. If this is not the case, you might need to use a deep equality check function, such as lodash's _.isEqual
-  const prevSearchArgumentRef = useRef();
-  useEffect(() => {
-    prevSearchArgumentRef.current = searchArgument;
-  });
-  const prevSearchArgument = prevSearchArgumentRef.current;
-
-  useEffect(() => {
-    if (JSON.stringify(searchArgument) !== JSON.stringify(prevSearchArgument)) {
-      setProducts([]);
-    }
-  }, [searchArgument]);
-
+  
   //this useEffect is for counting number of products
   useEffect(() => {
     let url;
@@ -69,7 +56,6 @@ const CardGrid = () => {
     console.log(queryString);
     if(queryString){
       url = `/products?_limit=15&page=${page}&${queryString}`
-      setProducts([])
     } else {
       url = `/products?_limit=15&page=${page}`
     }
