@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Avatar, Button, CssBaseline, TextField, Typography, Container, Box, Grid } from '@mui/material';
+import { Avatar, Button, CssBaseline, Grid, TextField, Typography, Container, Box, FormControl, FormLabel, Checkbox, RadioGroup, FormControlLabel, Radio, FormGroup } from '@mui/material';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import { useAtom } from 'jotai';
 import { userAtom } from '../atom/atom.js';
@@ -15,36 +15,55 @@ export default function EditRealEstateAd() {
   
   const navigate = useNavigate();
   
-  const [product, setProduct] = useState(null);
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [price, setPrice] = useState('');
+  const [adData, setAdData] = useState({
+    title: '',
+    description: '',
+    price: '',
+    city: '',
+    area: '',
+    property_type: '',
+    number_of_rooms: '',
+    category: '',
+    pool: false,
+    balcony: false,
+    parking: false,
+    garage: false,
+    cellar: false,
+    number_of_floors: '',
+    elevator: false,
+    disabled_access: false,
+    energy_performance_diagnostic: '',
+    furnished: false,
+    terrace: false,
+    garden: false,
+    basement: false,
+    caretaker: false
+  });
   const [images, setImages] = useState([]);
   const [existingImages, setExistingImages] = useState([]); // Pour stocker les images existantes
 
   useEffect(() => {
     const fetchProductData = async () => {
       try {
-        if (user.isLoggedIn && user.id && productId !== 'undefined') {
-          const productData = await getData(`/users/${user.id}/products/${productId}`);
-          setProduct(productData);
-          setTitle(productData.title);
-          setDescription(productData.description);
-          setPrice(productData.price);
-          setExistingImages(productData.images);
-        } else {
-          toast.error('Vous devez être connecté et avoir un ID de produit valide pour modifier une annonce.');
-        }
+        const productData = await getData(`/products/${productId}`);
+        setAdData(productData);
       } catch (error) {
         console.error('Erreur lors du chargement des données du produit :', error);
         toast.error('Échec du chargement des données de l\'annonce.');
       }
     };
   
-    if (user.isLoggedIn && user.id) {
-      fetchProductData();
-    }
-  }, [user, productId]);
+    fetchProductData();
+  }, [productId]);
+
+  const handleInputChange = (event) => {
+    const { name, value, checked, type } = event.target;
+    setAdData({
+      ...adData,
+      [name]: type === 'checkbox' ? checked : value
+    });
+  };
+
 
   const handleImageChange = (event) => {
     if (event.target.files.length > 2) {
@@ -56,22 +75,38 @@ export default function EditRealEstateAd() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    
-    const productData = {
-      title: title,
-      description: description,
-      price: price
-    };
-  
-    try {
-      // Utilisation de la fonction signUpdateData pour envoyer la requête PATCH
-      await productUpdateData(`/products/${productId}`, productData);
 
-      // Log des cookies après l'envoi de la requête
-    console.log('Cookies après la requête PATCH:', document.cookie);
-      
+    // Créez un nouvel objet avec seulement les données autorisées
+  const filteredData = {
+    title: adData.title,
+    description: adData.description,
+    price: adData.price,
+    city: adData.city,
+    area: adData.area,
+    property_type: adData.property_type,
+    number_of_rooms: adData.number_of_rooms,
+    category: adData.category,
+    pool: adData.pool,
+    balcony: adData.balcony,
+    parking: adData.parking,
+    garage: adData.garage,
+    cellar: adData.cellar,
+    number_of_floors: adData.number_of_floors,
+    elevator: adData.elevator,
+    disabled_access: adData.disabled_access,
+    energy_performance_diagnostic: adData.energy_performance_diagnostic,
+    furnished: adData.furnished,
+    terrace: adData.terrace,
+    garden: adData.garden,
+    basement: adData.basement,
+    caretaker: adData.caretaker
+    // Ne pas inclure id, created_at ou updated_at
+  };
+    
+    try {
+      await productUpdateData(`/products/${productId}`, filteredData);
       toast.success('Annonce mise à jour avec succès.');
-      navigate('/'); // Redirection vers la page d'acceuil'
+      navigate('/');
     } catch (error) {
       console.error('Erreur lors de la mise à jour de l\'annonce :', error);
       toast.error('Échec de la mise à jour de l\'annonce.');
@@ -108,7 +143,16 @@ export default function EditRealEstateAd() {
         <Typography component="h1" variant="h5">
           Modifier une annonce immobilière
           </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <FormControl component="fieldset" sx={{ mt: 2 }}>
+  <FormLabel component="legend">Type de bien</FormLabel>
+  <RadioGroup row name="property_type" value={adData.property_type} onChange={handleInputChange}>
+    
+    
+    <FormControlLabel value="appartement" control={<Radio />} label="Appartement" />
+    <FormControlLabel value="maison" control={<Radio />} label="Maison" />
+      </RadioGroup>
+      </FormControl>
+          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <TextField
             margin="normal"
             required
@@ -118,8 +162,8 @@ export default function EditRealEstateAd() {
             name="title"
             autoComplete="title"
             autoFocus
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            value={adData.title}
+            onChange={handleInputChange}
           />
           <TextField
             margin="normal"
@@ -131,8 +175,8 @@ export default function EditRealEstateAd() {
             autoComplete="description"
             multiline
             rows={4}
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            value={adData.description}
+            onChange={handleInputChange}
           />
           <TextField
             margin="normal"
@@ -143,51 +187,190 @@ export default function EditRealEstateAd() {
             type="number"
             id="price"
             autoComplete="price"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
+            value={adData.price}
+            onChange={handleInputChange}
           />
-          <input
-            accept="image/*"
-            style={{ display: 'none' }}
-            id="raised-button-file"
-            multiple
-            type="file"
-            onChange={handleImageChange}
-          />
-          <label htmlFor="raised-button-file">
-            <Button variant="contained" component="span" fullWidth sx={{ mt: 2 }}>
-              Rajouter des images
-            </Button>
-          </label>
-          {existingImages && existingImages.length > 0 ? (
-                    existingImages.map((image, index) => (
-                      <Grid item xs={4} key={index}>
-                        <img src={image.url} alt={`image-${index}`} style={{ width: '100%' }} />
-                      </Grid>
-                    ))
-                  ) : (
-                    <p>Chargement des images...</p>
-                  )}
-          <Button
-            type="submit"
+          <TextField
+            margin="normal"
+            required
             fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Modifier l'annonce
-          </Button>
+            name="city"
+            label="Ville"
+            id="city"
+            autoComplete="city"
+            value={adData.city}
+            onChange={handleInputChange}
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="area"
+            label="Superficie (m²)"
+            type="number"
+            id="area"
+            autoComplete="area"
+            value={adData.area}
+            onChange={handleInputChange}
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="number_of_rooms"
+            label="Nombre de pièces"
+            type="number"
+            id="number_of_rooms"
+            autoComplete="number_of_rooms"
+            value={adData.number_of_rooms}
+            onChange={handleInputChange}
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="number_of_floors"
+            label="Nombre d'étages"
+            type="number"
+            id="number_of_floors"
+            autoComplete="number_of_floors"
+            value={adData.number_of_floors}
+            onChange={handleInputChange}
+          />
+           <FormControl component="fieldset" sx={{ mt: 2 }}>
+            <FormLabel component="legend">Catégorie</FormLabel>
+            <RadioGroup row name="category" value={adData.category} onChange={handleInputChange}>
+              <FormControlLabel value="ancien" control={<Radio />} label="Ancien" />
+              <FormControlLabel value="neuf" control={<Radio />} label="Neuf" />
+              <FormControlLabel value="projet en construction" control={<Radio />} label="Projet de construction" />
+            </RadioGroup>
+          </FormControl>
+                    <FormControl component="fieldset" sx={{ mt: 2 }}>
+            <FormLabel component="legend">Extérieur</FormLabel>
+            <FormGroup row>
+              <FormControlLabel
+                control={<Checkbox checked={adData.pool} onChange={handleInputChange} name="pool" />}
+                label="Piscine"
+              />
+              <FormControlLabel
+                control={<Checkbox checked={adData.balcony} onChange={handleInputChange} name="balcony" />}
+                label="Balcon"
+              />
+              <FormControlLabel
+                control={<Checkbox checked={adData.terrace} onChange={handleInputChange} name="terrace" />}
+                label="Terrasse"
+              />
+              <FormControlLabel
+                control={<Checkbox checked={adData.garden} onChange={handleInputChange} name="garden" />}
+                label="Jardin"
+              />
+              </FormGroup>
+            </FormControl>
 
-          <Button
-            onClick={handleDelete}
-            fullWidth
-            variant="contained"
-            color="error"
-            sx={{ mt: 2 }}
-          >
-            Supprimer l'annonce
-          </Button>
-        </Box>
-      </Box>
-    </Container>
+            <FormControl component="fieldset" sx={{ mt: 2 }}>
+              <FormLabel component="legend">Dépendances</FormLabel>
+              <FormGroup row>
+                <FormControlLabel
+                  control={<Checkbox checked={adData.garage} onChange={handleInputChange} name="garage" />}
+                  label="Garage"
+                />
+                <FormControlLabel
+                  control={<Checkbox checked={adData.parking} onChange={handleInputChange} name="parking" />}
+                  label="Parking"
+                />
+                <FormControlLabel
+                  control={<Checkbox checked={adData.cellar} onChange={handleInputChange} name="cellar" />}
+                  label="Cave"
+                />
+                <FormControlLabel
+                  control={<Checkbox checked={adData.basement} onChange={handleInputChange} name="basement" />}
+                  label="Sous-sol"
+                />
+              </FormGroup>
+            </FormControl>
+
+      <FormControl component="fieldset" sx={{ mt: 2 }}>
+        <FormLabel component="legend">Mobilités</FormLabel>
+        <FormGroup row>
+          <FormControlLabel
+            control={<Checkbox checked={adData.elevator} onChange={handleInputChange} name="elevator" />}
+            label="Ascenseur"
+          />
+          <FormControlLabel
+            control={<Checkbox checked={adData.disabled_access} onChange={handleInputChange} name="disabled_access" />}
+            label="Accès Handicapé"
+          />
+        </FormGroup>
+      </FormControl>
+
+      <FormControl component="fieldset" sx={{ mt: 2 }}>
+        <FormLabel component="legend">Autres</FormLabel>
+        <FormGroup row>
+          <FormControlLabel
+            control={<Checkbox checked={adData.furnished} onChange={handleInputChange} name="furnished" />}
+            label="Meublé"
+          />
+          <FormControlLabel
+            control={<Checkbox checked={adData.caretaker} onChange={handleInputChange} name="caretaker" />}
+            label="Gardien"
+          />
+        </FormGroup>
+      </FormControl>
+
+      <FormControl component="fieldset" sx={{ mt: 2 }}>
+        <FormLabel component="legend">Diagnostic de Performance Énergétique</FormLabel>
+        <RadioGroup row name="energy_performance_diagnostic" value={adData.energy_performance_diagnostic} onChange={handleInputChange}>
+          <FormControlLabel value="A" control={<Radio />} label="A" />
+          <FormControlLabel value="B" control={<Radio />} label="B" />
+          <FormControlLabel value="C" control={<Radio />} label="C" />
+          <FormControlLabel value="D" control={<Radio />} label="D" />
+          <FormControlLabel value="E" control={<Radio />} label="E" />
+          <FormControlLabel value="F" control={<Radio />} label="F" />
+          <FormControlLabel value="G" control={<Radio />} label="G" />
+        </RadioGroup>
+      </FormControl>
+                <input
+                  accept="image/*"
+                  style={{ display: 'none' }}
+                  id="raised-button-file"
+                  multiple
+                  type="file"
+                  onChange={handleImageChange}
+                />
+                <label htmlFor="raised-button-file">
+                  <Button variant="contained" component="span" fullWidth sx={{ mt: 2 }}>
+                    Rajouter des images
+                  </Button>
+                </label>
+                {existingImages && existingImages.length > 0 ? (
+                          existingImages.map((image, index) => (
+                            <Grid item xs={4} key={index}>
+                              <img src={image.url} alt={`image-${index}`} style={{ width: '100%' }} />
+                            </Grid>
+                          ))
+                        ) : (
+                          <p>Chargement des images...</p>
+                        )}
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  Modifier l'annonce
+                </Button>
+
+                <Button
+                  onClick={handleDelete}
+                  fullWidth
+                  variant="contained"
+                  color="error"
+                  sx={{ mt: 2 }}
+                >
+                  Supprimer l'annonce
+                </Button>
+              </Box>
+            </Box>
+          </Container>
   );
 }

@@ -36,6 +36,7 @@ function ShowProduct() {
           <Typography variant="h5" color="text.secondary" gutterBottom>
             {product.price}€
           </Typography>
+         
           <Typography variant="body1" color="text.secondary">
             {product.description}
           </Typography>
@@ -58,6 +59,40 @@ function ShowProduct() {
           <Button variant="outlined" color="secondary" component={Link} to={"/"}>
             Retour à la liste des produits
           </Button>
+          <Typography variant="body2" color="text.secondary">
+          Type de bien: {product.property_type}
+        </Typography>
+          
+          <Typography variant="body2" color="text.secondary">
+            Ville: {product.city}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Superficie: {product.area} m²
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Nombre de pièces: {product.number_of_rooms}
+          </Typography>
+          {product.old && <Typography variant="body2" color="text.secondary">Ancien</Typography>}
+          {product.new && <Typography variant="body2" color="text.secondary">Neuf</Typography>}
+          {product.construction_project && <Typography variant="body2" color="text.secondary">Projet de construction</Typography>}
+          {product.pool && <Typography variant="body2" color="text.secondary">Piscine</Typography>}
+          {product.balcony && <Typography variant="body2" color="text.secondary">Balcon</Typography>}
+          {product.parking && <Typography variant="body2" color="text.secondary">Parking</Typography>}
+          {product.garage && <Typography variant="body2" color="text.secondary">Garage</Typography>}
+          {product.cellar && <Typography variant="body2" color="text.secondary">Cave</Typography>}
+          <Typography variant="body2" color="text.secondary">
+            Nombre d'étages: {product.number_of_floors}
+          </Typography>
+          {product.elevator && <Typography variant="body2" color="text.secondary">Ascenseur</Typography>}
+          {product.disabled_access && <Typography variant="body2" color="text.secondary">Accès handicapé</Typography>}
+          <Typography variant="body2" color="text.secondary">
+            Diagnostic de performance énergétique: {product.energy_performance_diagnostic}
+          </Typography>
+          {product.furnished && <Typography variant="body2" color="text.secondary">Meublé</Typography>}
+          {product.terrace && <Typography variant="body2" color="text.secondary">Terrasse</Typography>}
+          {product.garden && <Typography variant="body2" color="text.secondary">Jardin</Typography>}
+          {product.basement && <Typography variant="body2" color="text.secondary">Sous-sol</Typography>}
+          {product.caretaker && <Typography variant="body2" color="text.secondary">Gardien</Typography>}
         </Box>
       </Paper>
       <Paper elevation={3} sx={{ p: 4 }}>
