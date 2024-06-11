@@ -59,7 +59,7 @@ function App() {
         <Route path="/card" element={<Card />} />
         <Route path="/product/:productId" element={<ShowProduct />} />
         <Route path="/forgetpassword" element={<ForgetPassword />} />
-        <Route path="/resetpassword" element={<ResetPassword />} />
+        <Route path="/users/password/edit" element={<ResetPassword />} />
 
       </Routes>
       <Footer />
