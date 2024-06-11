@@ -2,13 +2,10 @@ import { useEffect, useState } from "react";
 import { getData } from "../service/apiManager.js";
 import { Container, Typography, Box, Button, Paper } from '@mui/material';
 import { BrowserRouter as Router, Route, Link, useParams } from "react-router-dom";
-<<<<<<< HEAD
 import { useAtom } from 'jotai';
 import { userAtom } from '../atom/atom.js';
-=======
 import Map from "./Map.jsx";
 
->>>>>>> master
 //passer en props le product id, puis après recheck le link
 function ShowProduct() {
   const { productId } = useParams();
