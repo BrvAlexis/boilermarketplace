@@ -14,19 +14,20 @@ function getHeaders() {
     return headers;
 }
 export async function getData(objectUrl,body){
-    const json = await ky.get(baseUrl +objectUrl, 
+    console.log(objectUrl);
+    const json = await ky.get(baseUrl + objectUrl, 
         {
-        //    headers: getHeaders(),
+           headers: getHeaders(),
         //    json: {body},
     }).json();
     return json;
 }
 
 export async function postData(objectUrl,body){
-    //console.log(objectUrl,body)
+    console.log(objectUrl,body)
     const json = await ky.post(baseUrl +objectUrl, {
         headers: getHeaders(),
-        json: body
+        json: body,
     }).json();
     return json;
 }
@@ -57,7 +58,7 @@ export async function signUpdateData(objectUrl,body){
         json: body
     });
     //console.log("json : ",json);
-    Cookies.set('token', json.headers.get("Authorization"));
+    // Cookies.set('token', json.headers.get("Authorization"));
     return json.json();
 }
 
@@ -68,7 +69,11 @@ export async function productUpdateData(objectUrl, body) {
         json: body
       });
 
-      return response.json();
+      if (response.status === 204 || !response.bodyUsed) { //If the status code is 204 (No Content),
+        return null; // or return a default value
+      } else {
+        return response.json();
+      }
     } catch (error) {
       console.error('Erreur lors de la mise à jour du produit :', error);
       throw error;

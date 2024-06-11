@@ -6,8 +6,10 @@ import Button from '@mui/material/Button';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {decoData} from '../service/apiManager'
+import { useNavigate } from 'react-router-dom';
 
 function LogoutButton() {
+  const navigate = useNavigate();
   const [user, setUser] = useAtom(userAtom);
 
   const handleLogout = () => {
@@ -19,6 +21,7 @@ function LogoutButton() {
         isLoggedIn: false,
       });
     toast.success('Déconnexion réussie !');
+    navigate('/'); // Redirect to home page 
   } catch (error) {
     toast.error('Échec de la déconnexion.');
   }

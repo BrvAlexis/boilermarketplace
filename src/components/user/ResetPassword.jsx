@@ -12,14 +12,22 @@ import {
 } from '@mui/material';
 import LockResetIcon from '@mui/icons-material/LockReset';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { signUpdateData } from '../service/apiManager'
+
+import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { productUpdateData } from '../service/apiManager';
 
 const theme = createTheme();
 
 export default function ResetPassword() {
-  const [email, setEmail] = useState('');
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const resetPasswordToken = queryParams.get('reset_password_token'); //In this code, useLocation returns the location object, which contains information about the current URL. URLSearchParams is a built-in browser API that makes it easy to work with query parameters. queryParams.get('reset_password_token') gets the value of the reset_password_token query parameter.
+  // console.log(resetPasswordToken);
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -29,12 +37,16 @@ export default function ResetPassword() {
     }
     // Ici, intégrez la logique pour changer le mot de passe
     try{
-      const reponse = await signUpdateData("/users/",{
+      const reponse = await productUpdateData("/users/password",{
         user: {
-          email: email,
-          password: password
+          reset_password_token: resetPasswordToken,
+          password: password,
+          password_confirmation: confirmPassword
         }
       })
+      // console.log(reponse);
+      toast.success('Your password has beend reset successfully !');
+      navigate("/signin")
     }catch (error) {
       console.log(error);
     }
@@ -59,19 +71,7 @@ export default function ResetPassword() {
             Réinitialisation du mot de passe
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-          <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="email"
-              label="Votre Email"
-              type="email"
-              id="email"
-              autoComplete="new-email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
+        
             <TextField
               variant="outlined"
               margin="normal"
@@ -107,8 +107,13 @@ export default function ResetPassword() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
-                  Retour à la page d'accueil
+                <Link href="/" variant="body2">
+                  Retour à la page d&apos;accueil
+                </Link>
+              </Grid>
+              <Grid item xs>
+                <Link href="/forgetpassword" variant="body2">
+                  Retour à la page forget password
                 </Link>
               </Grid>
             </Grid>
