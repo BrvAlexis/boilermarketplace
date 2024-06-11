@@ -2,7 +2,7 @@
   background-image: url('../../assets/images/pexels-mikebirdy-126271.jpg');
   background-position: center;
   height: 40vh;
-  div{
+  .text-hero{
   background: rgba(255, 255, 255, 0.2);
   padding-left: 5%;
   padding-right: 5%;

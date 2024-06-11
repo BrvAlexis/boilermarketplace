@@ -5,7 +5,7 @@ import { Typography } from '@mui/material';
 const HeroSection = () => {
   return (
       <div className='hero'>
-        <div>
+        <div className='text-hero'>
           <Typography
             component="h1"
             variant="h2"
