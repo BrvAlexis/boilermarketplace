@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Button, Box } from '@mui/material';
 //These 2 lines are neccesary to use leaflet map if you don't want ot use CDN stylsheet and script
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css'
@@ -6,7 +7,7 @@ import 'leaflet/dist/leaflet.css'
 export default function Map({adress}) {
   const mapRef = useRef(null);
   const mapInstanceRef = useRef(null);
-  // const [markerPosition, setMarkerPosition] = useState(null);
+  const [markerPosition, setMarkerPosition] = useState(null);
   const [latitude, setLatitude] = useState(48.8566)
   const [longitude, setLongitude] = useState(2.3522)
   //use this functoin if need a pop up on click
@@ -57,6 +58,7 @@ export default function Map({adress}) {
     lastMarker = L.marker([lat, long]).addTo(mapInstanceRef.current);
     // Update the map view to center on the new marker
     mapInstanceRef.current.setView([lat, long], 13);
+    setMarkerPosition(lastMarker)
   };
 
   useEffect(() => {
@@ -99,10 +101,14 @@ export default function Map({adress}) {
 
 
   return(
-    <div>
-      <h2>Position of the good</h2>
-      <button onClick={handleItineraire}>Itinéraire</button>
-      <div ref={mapRef} style={{height:"300px"}}></div>
-    </div>
+    <>
+      <Box sx={{ mb: 3 }}>
+        <h2>Position of the good</h2>
+        <Button variant="outlined" color="primary" onClick={handleItineraire}>Itinéraire</Button>
+      </Box>
+      <Box sx={{ mb: 3 }}>
+        <div ref={mapRef} style={{height:"300px"}}></div>
+      </Box>
+    </>
   )
 }
