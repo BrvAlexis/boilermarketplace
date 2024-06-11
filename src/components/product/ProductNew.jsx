@@ -4,8 +4,11 @@ import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import { postData } from '../service/apiManager';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useAtom } from 'jotai';
+import { userAtom } from '../atom/atom.js';
 
 export default function CreateRealEstateAd() {
+  const [user] = useAtom(userAtom);
   const navigate = useNavigate();
   const [adData, setAdData] = useState({
     title: '',
@@ -42,7 +45,13 @@ export default function CreateRealEstateAd() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    
+    // Vérifiez si l'utilisateur est connecté avant de continuer
+   
+     // Vérifiez si l'utilisateur est connecté avant de continuer
+  if (!user.isLoggedIn) {
+    toast.error('Vous devez être connecté pour effectuer cette action.');
+    return;
+  }
     try {
       
       
@@ -152,6 +161,18 @@ export default function CreateRealEstateAd() {
             id="number_of_rooms"
             autoComplete="number_of_rooms"
             value={adData.number_of_rooms}
+            onChange={handleInputChange}
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="number_of_floors"
+            label="Nombre d'étages"
+            type="number"
+            id="number_of_floors"
+            autoComplete="number_of_floors"
+            value={adData.number_of_floors}
             onChange={handleInputChange}
           />
           <FormControl component="fieldset" sx={{ mt: 2 }}>
