@@ -16,24 +16,27 @@ const CardGrid = () => {
   const [page,setPage] = useState(1)
   const [hasMoreProduct, setHasMoreProduct] = useState(true);
   const [searchArgument, setSearchArgument] = useAtom(searchAtom)
+  const prevSearchArgumentRef = useRef(searchArgument);
 
-  
-  //this useEffect is for counting number of products
-  useEffect(() => {
-    let url;
+  const filterArgument =() => {
     console.log(searchArgument);
     const queryString = Object.entries(searchArgument)
       .filter(([key, value]) => value)
       .map(([key, value]) => `${key}=${value}`)
       .join('&');
-
+    return queryString
+  }
+  //this useEffect is for counting number of products
+  useEffect(() => {
+    let url;
+    let queryString = filterArgument()
     console.log(queryString);
     if(queryString){
       url = `/products?${queryString}`
     } else {
       url = "/products"
     }
-    console.log(url);
+    // console.log(url);
     (async () => {
       try {
         const data = await getData(url);
@@ -47,11 +50,7 @@ const CardGrid = () => {
   //this useEffect is for showing the list of products
   useEffect(() => {
     let url;
-    console.log(searchArgument);
-    const queryString = Object.entries(searchArgument)
-      .filter(([key, value]) => value)
-      .map(([key, value]) => `${key}=${value}`)
-      .join('&');
+    let queryString = filterArgument()
 
     console.log(queryString);
     if(queryString){
@@ -61,6 +60,10 @@ const CardGrid = () => {
     }
     console.log(url);
     const cardData = async () => {
+      if (searchArgument !== prevSearchArgumentRef.current) {
+        setProducts([]); //initialize/empty products array when searchArgument changes
+        prevSearchArgumentRef.current = searchArgument;
+      }
       try {
         const data = await getData(url);
         setProducts(prevProducts => [...prevProducts, ...data]);
@@ -71,7 +74,6 @@ const CardGrid = () => {
     };
     cardData();
   }, [page,searchArgument]);
-  // ... vos données de carte
 
   return (
     <Container component="main" maxWidth="xl">

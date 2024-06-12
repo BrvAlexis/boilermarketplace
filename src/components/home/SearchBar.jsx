@@ -16,8 +16,8 @@ function SearchBar() {
 
   const handlesubmit = (event) => {
     event.preventDefault();
-    console.log(typeOfGood);
     console.log(city);
+    //here you must be careful of the name of each attribut, they should have same name with server database (cf schema)
     setSearchArgument(
       {"property_type":typeOfGood,
         "price":price,
