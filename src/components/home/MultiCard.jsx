@@ -15,11 +15,10 @@ const CardGrid = () => {
   const [products, setProducts] = useState([]);
   const [page,setPage] = useState(1)
   const [hasMoreProduct, setHasMoreProduct] = useState(true);
-  const [searchArgument, setSearchArgument] = useAtom(searchAtom)
-  const prevSearchArgumentRef = useRef(searchArgument);
+  const [searchArgument] = useAtom(searchAtom)
 
   const filterArgument =() => {
-    console.log(searchArgument);
+    console.log("argument",searchArgument);
     const queryString = Object.entries(searchArgument)
       .filter(([key, value]) => value)
       .map(([key, value]) => `${key}=${value}`)
@@ -30,9 +29,11 @@ const CardGrid = () => {
   useEffect(() => {
     let url;
     let queryString = filterArgument()
-    console.log(queryString);
+    // console.log(queryString);
     if(queryString){
       url = `/products?${queryString}`
+      setProducts([])
+      setPage(1)
     } else {
       url = "/products"
     }
@@ -52,21 +53,22 @@ const CardGrid = () => {
     let url;
     let queryString = filterArgument()
 
-    console.log(queryString);
-    if(queryString){
+    console.log("string for url",queryString);
+    if(queryString){ //If there is an argument from searchbar
       url = `/products?_limit=15&page=${page}&${queryString}`
     } else {
       url = `/products?_limit=15&page=${page}`
     }
     console.log(url);
+
     const cardData = async () => {
-      if (searchArgument !== prevSearchArgumentRef.current) {
-        setProducts([]); //initialize/empty products array when searchArgument changes
-        prevSearchArgumentRef.current = searchArgument;
-      }
       try {
         const data = await getData(url);
-        setProducts(prevProducts => [...prevProducts, ...data]);
+        console.log('data:', data);
+        setProducts(prevProducts => {
+          console.log('prevProducts:', prevProducts);
+          return [...prevProducts, ...data];
+        });
         setHasMoreProduct(data.length > 0); //sets hasMore to true if the length of data is 15 (the limit you requested) and false otherwise. If the length of data is less than 15, that means there is no more data
       } catch (error) {
         console.error(error);

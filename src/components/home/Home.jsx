@@ -8,8 +8,7 @@ import "./home.css"
 import { useEffect } from "react"
 export default function Home() {
   const [mapIsOpenned, setMapIsOpenned] = useState(false)
-  useEffect(
-    ()=>{console.log(mapIsOpenned)},[mapIsOpenned])
+  
   return(
     <div className="main_home">
       <div>

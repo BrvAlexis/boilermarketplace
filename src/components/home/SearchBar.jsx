@@ -1,4 +1,4 @@
-import { TextField, InputAdornment, Box, FormControl, FormLabel, FormControlLabel, RadioGroup, Radio, Button } from '@mui/material';
+import { TextField, InputAdornment, Box, FormControl, FormLabel, FormControlLabel, RadioGroup, Radio, Button, Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { useState } from 'react';
 import { useAtom } from 'jotai';
@@ -31,6 +31,9 @@ function SearchBar() {
 
   return (
     <Box component="form" onSubmit={handlesubmit}>
+      <Typography variant="p" component="div">
+        Filtre
+      </Typography>
       <FormControl>
         <Box sx={{display:"flex", justifyContent:"center", alignItems:"center"}}>
           <Box sx={{marginRight: 2}}>
