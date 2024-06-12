@@ -16,6 +16,12 @@ function SearchBar() {
 
   const handlesubmit = (event) => {
     event.preventDefault();
+
+    // Check if value are empty
+    if (!city.trim() && !typeOfGood && !price && !area &&!numberOfRoom && !parking) {
+      alert('You need to put at least one element to filter');
+      return;
+    }
     console.log(city);
     //here you must be careful of the name of each attribut, they should have same name with server database (cf schema)
     setSearchArgument(
@@ -59,6 +65,12 @@ function SearchBar() {
             >
               <FormControlLabel value="maison" control={<Radio />} label="Maison" sx={{ mb: -2 }} />
               <FormControlLabel value="appartement" control={<Radio />} label="Appartement" />
+              <Button
+              variant="outlined"
+              onClick={()=>setTypeOfGood('')}
+            >
+              Clear
+            </Button>
             </RadioGroup>
           </Box>
           <Box>
