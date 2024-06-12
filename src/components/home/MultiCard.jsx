@@ -1,14 +1,11 @@
 import { useEffect, useState, useRef } from "react";
 import { Grid } from "@mui/material";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import { Container, Button, CardActionArea, CardActions, Box } from "@mui/material";
+import { Container, Card, CardContent,Typography,  Button, CardActionArea, CardActions, Box } from "@mui/material";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { getData } from "../service/apiManager.js";
 
 import { useAtom } from "jotai";
-import { searchAtom } from "../atom/atom.js";
+import { searchAtom, productsAtom } from "../atom/atom.js";
 
 const CardGrid = () => {
   const [allProduct,setallProduct] = useState([])
@@ -16,6 +13,8 @@ const CardGrid = () => {
   const [page,setPage] = useState(1)
   const [hasMoreProduct, setHasMoreProduct] = useState(true);
   const [searchArgument] = useAtom(searchAtom)
+  const [productsToAtom,setProductsToAtom] = useAtom(productsAtom);
+
 
   const filterArgument =() => {
     console.log("argument",searchArgument);
@@ -25,6 +24,7 @@ const CardGrid = () => {
       .join('&');
     return queryString
   }
+
   //this useEffect is for counting number of products
   useEffect(() => {
     let url;
@@ -33,6 +33,7 @@ const CardGrid = () => {
     if(queryString){
       url = `/products?${queryString}`
       setProducts([])
+      setProductsToAtom([])
       setPage(1)
     } else {
       url = "/products"
@@ -55,9 +56,9 @@ const CardGrid = () => {
 
     console.log("string for url",queryString);
     if(queryString){ //If there is an argument from searchbar
-      url = `/products?_limit=15&page=${page}&${queryString}`
+      url = `/products?_limit=12&page=${page}&${queryString}`
     } else {
-      url = `/products?_limit=15&page=${page}`
+      url = `/products?_limit=12&page=${page}`
     }
     console.log(url);
 
@@ -69,13 +70,17 @@ const CardGrid = () => {
           console.log('prevProducts:', prevProducts);
           return [...prevProducts, ...data];
         });
+        setProductsToAtom(prevProducts => {
+          console.log('prevProducts:', prevProducts);
+          return [...prevProducts, ...data];
+        })
         setHasMoreProduct(data.length > 0); //sets hasMore to true if the length of data is 15 (the limit you requested) and false otherwise. If the length of data is less than 15, that means there is no more data
       } catch (error) {
         console.error(error);
       }
     };
     cardData();
-  }, [page,searchArgument]);
+  }, [page, searchArgument]);
 
   return (
     <Container component="main" maxWidth="xl">
@@ -88,7 +93,7 @@ const CardGrid = () => {
       <Grid container spacing={2}>
         {products.map((product) => (
           <Grid item key={product.id} xs={12} sm={6} md={4} lg={3}>
-            <Card sx={{ maxWidth: 345 }}>
+            <Card sx={{ maxWidth: 1200 }}>
               <CardActionArea component={Link} to={`/product/${product.id}`}>
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">

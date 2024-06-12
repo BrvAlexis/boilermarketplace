@@ -89,7 +89,7 @@ export default function Map({adress}) {
       //use this functoin if need a pop up on click
       // mapInstanceRef.current.on('click', onMapClick);
     }
-  }, []);
+  }, [adress]);
 
   const handleItineraire = () => {
     if (markerPosition) {

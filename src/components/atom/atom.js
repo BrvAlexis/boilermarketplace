@@ -10,3 +10,5 @@ export const userAtom = atomWithStorage(
 });
 
 export const searchAtom = atom({})
+
+export const productsAtom = atom([])
