@@ -54,12 +54,12 @@ const CardGrid = () => {
     if (prevSearchArgumentRef.current !== searchArgument){
     let url;
     let queryString = filterArgument()
-
+    let itemLimit = 12
     console.log("string for url",queryString);
     if(queryString){ //If there is an argument from searchbar
-      url = `/products?_limit=12&page=${page}&${queryString}`
+      url = `/products?_limit=${itemLimit}&page=${page}&${queryString}`
     } else {
-      url = `/products?_limit=12&page=${page}`
+      url = `/products?_limit=${itemLimit}&page=${page}`
     }
     console.log(url);
 
@@ -70,7 +70,7 @@ const CardGrid = () => {
         setProducts(data);
         setProductsToAtom(data);
         
-        setHasMoreProduct(data.length > 0); //sets hasMore to true if the length of data is 15 (the limit you requested) and false otherwise. If the length of data is less than 15, that means there is no more data
+        setHasMoreProduct(data.length - itemLimit > -1); //sets hasMore to true if the length of data is 15 (the limit you requested) and false otherwise. If the length of data is less than 15, that means there is no more data
       } catch (error) {
         console.error(error);
       }
