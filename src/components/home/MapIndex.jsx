@@ -15,14 +15,6 @@ export default function MapIndex() {
   const [latitude, setLatitude] = useState(48.8566);
   const [longitude, setLongitude] = useState(2.3522);
   const [productsToAtom,setProductsToAtom] = useAtom(productsAtom);
-
-  //use this functoin if need a pop up on click
-  // function onMapClick(e) {
-  //   L.popup()
-  //     .setLatLng(e.latlng)
-  //     .setContent("You clicked the map at " + e.latlng.toString())
-  //     .openOn(mapInstanceRef.current);
-  // }
   
   const getLatLon = async (product) => {
     console.log(product.city);
