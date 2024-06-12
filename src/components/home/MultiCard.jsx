@@ -92,14 +92,14 @@ const CardGrid = () => {
       </Box>
       <Grid container spacing={2}>
         {products.map((product) => (
-          <Grid item key={product.id} xs={12} sm={6} md={4} lg={3}>
-            <Card sx={{ maxWidth: 1200 }}>
+          <Grid item key={product.id} xs={12} sm={6} md={4}>
+            <Card sx={{ width: 350 }}>
               <CardActionArea component={Link} to={`/product/${product.id}`}>
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
                     {product.title} {product.price}€
                   </Typography>
-                  <Typography variant="body2" color="text.secondary">
+                  <Typography variant="body2" color="text.secondary" sx={{ mt: 2, whiteSpace: 'pre-wrap', overflow: 'hidden' }}>
                     {product.description}
                   </Typography>
                 </CardContent>

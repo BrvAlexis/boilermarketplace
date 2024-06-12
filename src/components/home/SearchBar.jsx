@@ -1,5 +1,7 @@
 import { TextField, InputAdornment, Box, FormControl, FormLabel, FormControlLabel, RadioGroup, Radio, Button, Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import { toast } from 'react-toastify';
+
 import { useState } from 'react';
 import { useAtom } from 'jotai';
 import { searchAtom } from '../atom/atom';
@@ -19,7 +21,7 @@ function SearchBar() {
 
     // Check if value are empty
     if (!city.trim() && !typeOfGood && !price && !area &&!numberOfRoom && !parking) {
-      alert('You need to put at least one element to filter');
+      toast.error('You need to put at least one element to filter');
       return;
     }
     console.log(city);
@@ -41,7 +43,14 @@ function SearchBar() {
         Filtre
       </Typography>
       <FormControl>
-        <Box sx={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: { xs: "column", sm: "row" },
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
           <Box sx={{marginRight: 2}}>
             <TextField
               variant="outlined"
