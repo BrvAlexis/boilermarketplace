@@ -15,23 +15,27 @@ function SearchBar() {
   const [areaMin,setAreaMin] = useState("")
   const [areaMax,setAreaMax] = useState("")
   const [numberOfRoom,setNumberOfRoom] = useState("")
-  const [parking,setParking] = useState("")
+  const [parking,setParking] = useState(false)
 
   const handlesubmit = (event) => {
     event.preventDefault();
 
     // Check if value are empty
-    if (!city.trim() && !typeOfGood && !price && !area &&!numberOfRoom && !parking) {
+    if (!city.trim() && !typeOfGood && !priceMin && !priceMax && !areaMin && !areaMax && !numberOfRoom && !parking) {
       toast.error('You need to put at least one element to filter');
       return;
     }
     console.log(city);
+    console.log(parking);
+    console.log(numberOfRoom);
     //here you must be careful of the name of each attribut, they should have same name with server database (cf schema)
     setSearchArgument(
       {"property_type":typeOfGood,
-        "price":price,
-        "area":area,
-        "number_of_rooms":numberOfRoom,
+        "priceMax":priceMax,
+        "priceMin":priceMin,
+        "areaMax":areaMax,
+        "areaMin":areaMin,
+        "number_of_rooms":numberOfRoom, //be carefull if value = 5, should show all goods that have at least 5 rooms and plus
         "parking":parking,
         "city":city,
       }
@@ -104,7 +108,7 @@ function SearchBar() {
           alignItems: "center",
         }}
       >
-          <Box>
+          <Box sx={{marginRight: 5}}>
             <Box sx={{marginRight: 2}}>
               <FormLabel>Recherche par ville</FormLabel>
               <br />
@@ -132,26 +136,26 @@ function SearchBar() {
                 onChange={(e, newNumberOfRoom) => setNumberOfRoom(newNumberOfRoom)}
                 aria-label="number of room"
               >
-              <ToggleButton value="one" aria-label="one room" sx={{ borderRadius: '50%'}}>
+              <ToggleButton value={1} aria-label="one room" sx={{ borderRadius: '50%'}}>
                 1
               </ToggleButton>
-              <ToggleButton value="two" aria-label="two rooms" sx={{ borderRadius: '50%'}}>
+              <ToggleButton value={2} aria-label="two rooms" sx={{ borderRadius: '50%'}}>
                 2
               </ToggleButton>
-              <ToggleButton value="three" aria-label="three rooms" sx={{ borderRadius: '50%'}}>
+              <ToggleButton value={3} aria-label="three rooms" sx={{ borderRadius: '50%'}}>
                 3
               </ToggleButton>
-              <ToggleButton value="four" aria-label="four rooms" sx={{ borderRadius: '50%' }}>
+              <ToggleButton value={4} aria-label="four rooms" sx={{ borderRadius: '50%' }}>
                 4
               </ToggleButton>
-              <ToggleButton value="five" aria-label="five rooms" sx={{ borderRadius: '50%' }}>
+              <ToggleButton value={5} aria-label="five rooms" sx={{ borderRadius: '50%' }}>
                 5+
               </ToggleButton>
               </ToggleButtonGroup>
             </Box>
           </Box>
 
-          <Box sx={{marginRight: 2}}>
+          <Box sx={{marginRight: 5}}>
             <FormLabel>Type de logement</FormLabel>
             <RadioGroup
               name="type-of-good"
@@ -169,7 +173,7 @@ function SearchBar() {
             </RadioGroup>
           </Box>
 
-          <Box sx={{marginRight: 10}}>
+          <Box sx={{marginRight: 5}}>
             <FormLabel>Prix €</FormLabel>
             <br />
             <Grid container spacing={2}>
@@ -178,7 +182,7 @@ function SearchBar() {
                   variant="outlined"
                   placeholder="Min"
                   value={priceMin}
-                  onChange={(e) => setCity(e.target.value)}
+                  onChange={(e) => setPriceMin(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -186,7 +190,7 @@ function SearchBar() {
                   variant="outlined"
                   placeholder="Max"
                   value={priceMax}
-                  onChange={(e) => setCity(e.target.value)}
+                  onChange={(e) => setPriceMax(e.target.value)}
                 />
               </Grid>
             </Grid>
@@ -224,9 +228,6 @@ function SearchBar() {
             </Box>
           </Box>
 
-          
-
-
           <Box>
             <Button
               type="submit"
@@ -237,6 +238,7 @@ function SearchBar() {
               Submit
             </Button>
           </Box>
+
         </Box>
       </FormControl>
     </Box>
