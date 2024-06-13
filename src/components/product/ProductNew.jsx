@@ -45,7 +45,7 @@ export default function CreateRealEstateAd() {
       const response = await postData("/products", adData);
       console.log(response);
       toast.success("Annonce créée avec succès !", {
-        onClose: () => navigate("/"),
+        onClose: () => navigate('/'),
       });
     } catch (error) {
       console.error("Erreur lors de la publication de l'annonce :", error);

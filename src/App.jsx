@@ -11,6 +11,7 @@ import Footer from './components/static/Footer.jsx';
 import Hero from './components/home/Hero.jsx';
 import MultiCard from './components/home/MultiCard.jsx';
 import ProductNew from './components/product/ProductNew.jsx';
+
 import ProductEdit from './components/product/ProductEdit.jsx';
 import { ToastContainer } from 'react-toastify';
 import { toast } from 'react-toastify';
@@ -51,6 +52,7 @@ function App() {
         <Route path="/profile/:urlprofile" element={<PrivateRoute><Profile /></PrivateRoute>}/>
         <Route path="/profile/edit" element={<PrivateRoute><EditProfile /></PrivateRoute>}/>
         <Route path="/productnew" element={<ProductNew />} />
+        
         <Route path="/productedit/:productId" element={<ProductEdit />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />

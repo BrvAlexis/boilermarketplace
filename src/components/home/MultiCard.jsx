@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { Grid } from "@mui/material";
-import { Container, Card, CardContent,Typography,  Button, CardActionArea, CardActions, Box } from "@mui/material";
+import { Container, Card, CardContent,Typography,  Button, CardActionArea, CardActions, Box, CardMedia } from "@mui/material";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { getData } from "../service/apiManager.js";
 
@@ -91,7 +91,16 @@ const CardGrid = () => {
         {products.map((product) => (
           <Grid item key={product.id} xs={12} sm={6} md={4}>
             <Card sx={{ width: 350 }}>
+              
               <CardActionArea component={Link} to={`/product/${product.id}`}>
+                {product.image_url && (
+                  <CardMedia
+                    component="img"
+                    height="140"
+                    image={`${product.image_url}`} 
+                    alt={product.title}
+                  />
+                )}
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
                     {product.title} {product.price}€

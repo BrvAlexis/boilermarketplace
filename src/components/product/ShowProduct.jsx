@@ -26,8 +26,17 @@ function ShowProduct() {
     productData();
   }, [productId]);
 
+  // Utilisez l'URL complète pour l'attribut src de l'image
+  const imageUrl = `http://localhost:3000${product.image_url}`;
+  console.log(product.image_url)
+
   return (
     <Container maxWidth="md" sx={{ mt: 4 }}>
+       {imageUrl && (
+        <Box sx={{ my: 2 }}>
+          <img src={imageUrl} alt={product.title || 'Product Image'} style={{ maxWidth: '100%', height: 'auto' }} />
+        </Box>
+      )}
       <Paper elevation={3} sx={{ p: 4, mb: 4 }}>
         <Box sx={{ mb: 3 }}>
           <Typography variant="h3" component="h1" gutterBottom sx={{ whiteSpace: 'pre-wrap', overflow: 'hidden' }}>

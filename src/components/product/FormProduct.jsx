@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import {
   Avatar,
   Button,
@@ -376,7 +377,7 @@ export default function FormProduct({
             onChange={handleImageChange}
           />
 
-          <Button
+            <Button
             type="submit"
             fullWidth
             variant="contained"
@@ -386,15 +387,24 @@ export default function FormProduct({
             {isEditing ? "Modifier l'annonce" : "Publier l'annonce"}
           </Button>
           {isEditing && (
-            <Button
-              fullWidth
-              variant="contained"
-              color="error"
-              sx={{ mb: 2 }}
-              onClick={onDelete}
-            >
-              Supprimer l'annonce
-            </Button>
+            <>
+              
+              <Button
+                fullWidth
+                variant="contained"
+                color="error"
+                sx={{ mb: 2 }}
+                onClick={onDelete}
+              >
+                Supprimer l'annonce
+              </Button>
+                            {adData.image_url && (
+                <Box sx={{ my: 2 }}>
+                  <img src={`http://localhost:3000${adData.image_url}`} alt="Image du produit" style={{ maxWidth: '100%', height: 'auto' }} />
+                </Box>
+              )}
+              
+            </>
           )}
         </Box>
       </Box>

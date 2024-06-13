@@ -92,6 +92,7 @@ export default function EditRealEstateAd() {
       productId={productId}
       initialData={adData}
       setAdData={setAdData}
+      
     />
   );
 }
