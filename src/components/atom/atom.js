@@ -9,3 +9,6 @@ export const userAtom = atomWithStorage(
   isLoggedIn: false,
 });
 
+export const searchAtom = atom({})
+
+export const productsAtom = atom([])

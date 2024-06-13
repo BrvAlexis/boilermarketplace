@@ -12,6 +12,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { Link as RouterLink } from "react-router-dom";
 import { useAtom } from "jotai";
 import { userAtom } from "../atom/atom";
+import logo from '../../assets/images/logoimmothp.png';
 
 export default function ButtonAppBar() {
   const [user] = useAtom(userAtom);
@@ -30,23 +31,11 @@ export default function ButtonAppBar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography
-            variant="h6"
-            component={RouterLink}
-            to="/"
-            sx={{ flexGrow: 1 }}
-          >
-            BoilerFront
-          </Typography>
+        <RouterLink to="/" sx={{ flexGrow: 1 }}>
+        <img src={logo} alt="Logo" style={{ marginRight: '20px', height: '50px' }} />
+        </RouterLink>
+        <Box sx={{ flexGrow: 1 }} />
+  
           {user.isLoggedIn ? (
             <>
               <Button color="inherit" onClick={handleMenu}>
@@ -81,13 +70,7 @@ export default function ButtonAppBar() {
                 >
                   Créer une annonce
                 </MenuItem>
-                <MenuItem
-                  onClick={handleClose}
-                  component={RouterLink}
-                  to="/productedit"
-                >
-                  Modifier une annonce
-                </MenuItem>
+              
                 <MenuItem onClick={handleClose}>
                   <LogOut />
                 </MenuItem>

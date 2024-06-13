@@ -54,12 +54,12 @@ const CardGrid = () => {
     if (prevSearchArgumentRef.current !== searchArgument){
     let url;
     let queryString = filterArgument()
-    let itemLimit = 12
+
     console.log("string for url",queryString);
     if(queryString){ //If there is an argument from searchbar
-      url = `/products?_limit=${itemLimit}&page=${page}&${queryString}`
+      url = `/products?_limit=12&page=${page}&${queryString}`
     } else {
-      url = `/products?_limit=${itemLimit}&page=${page}`
+      url = `/products?_limit=12&page=${page}`
     }
     console.log(url);
 
@@ -67,10 +67,15 @@ const CardGrid = () => {
       try {
         const data = await getData(url);
         console.log('data:', data);
-        setProducts(data);
-        setProductsToAtom(data);
-        
-        setHasMoreProduct(data.length - itemLimit > -1); //sets hasMore to true if the length of data is 15 (the limit you requested) and false otherwise. If the length of data is less than 15, that means there is no more data
+        setProducts(prevProducts => {
+          console.log('prevProducts:', prevProducts);
+          return [...prevProducts, ...data];
+        });
+        setProductsToAtom(prevProducts => {
+          console.log('prevProducts:', prevProducts);
+          return [...prevProducts, ...data];
+        })
+        setHasMoreProduct(data.length > 0); //sets hasMore to true if the length of data is 15 (the limit you requested) and false otherwise. If the length of data is less than 15, that means there is no more data
       } catch (error) {
         console.error(error);
       }
@@ -117,14 +122,9 @@ const CardGrid = () => {
         ))}
       </Grid>
       <Box display="flex" justifyContent="center" mt={3} mb={2}>
-        {(page >= 2) &&
-        <Button variant="contained" onClick={()=>{setPage(prevPage => prevPage >= 2 ? prevPage - 1 : prevPage)}}>
-          Page précédente
-        </Button>
-        }
         {hasMoreProduct && 
         <Button variant="contained" onClick={()=>{setPage(prevPage => prevPage + 1)}}>
-          Page suivante
+          More
         </Button>
         }
       </Box>
