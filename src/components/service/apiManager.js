@@ -70,10 +70,17 @@ export async function signUpdateData(objectUrl, body) {
 }
 
 export async function productUpdateData(objectUrl, body) {
+  const formData = new FormData();
+  for (const key in body) {
+    if (body.hasOwnProperty(key)) {
+      formData.append(`product[${key}]`, body[key]);
+    }
+  }
+
   try {
     const response = await ky.patch(baseUrl + objectUrl, {
       headers: getHeaders(),
-      json: body,
+      body: formData,
     });
 
     if (response.status === 204 || !response.bodyUsed) {
