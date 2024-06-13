@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Grid, Card, CardContent, Typography } from '@mui/material';
 
 const MetricsProduct = ({ data }) => {
     const [totalProduct, setTotalProduct] = useState(0);
@@ -22,12 +23,40 @@ const MetricsProduct = ({ data }) => {
     }, [data]);
 
     return (
-        <div id="metrics">
-            <p>Nombre total d'annonces : {totalProduct}</p>
-            <p>Nombre total de propriétaires : {totalProductOwners}</p>
-            <p>Nombre d'annonces moyen par propriétaire : {avgProductPerOwner}</p>
-            <p>Prix moyen d'une annonce : {avgPrice}</p>
-        </div>
+<>
+      <Grid item xs={12} md={3}>
+        <Card>
+          <CardContent>
+            <Typography variant="h6">Nombre total d'annonces</Typography>
+            <Typography variant="h4">{totalProduct}</Typography>
+          </CardContent>
+        </Card>
+      </Grid>
+      <Grid item xs={12} md={3}>
+        <Card>
+          <CardContent>
+            <Typography variant="h6">Nombre total de propriétaires</Typography>
+            <Typography variant="h4">{totalProductOwners}</Typography>
+          </CardContent>
+        </Card>
+      </Grid>
+      <Grid item xs={12} md={3}>
+        <Card>
+          <CardContent>
+            <Typography variant="h6">Nombre d'annonces moyen par propriétaire</Typography>
+            <Typography variant="h4">{avgProductPerOwner}</Typography>
+          </CardContent>
+        </Card>
+      </Grid>
+      <Grid item xs={12} md={3}>
+        <Card>
+          <CardContent>
+            <Typography variant="h6">Prix moyen d'une annonce</Typography>
+            <Typography variant="h4">{avgPrice}</Typography>
+          </CardContent>
+        </Card>
+      </Grid>
+    </>
     );
 };
 

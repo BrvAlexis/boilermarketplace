@@ -59,7 +59,7 @@ function App() {
         <Route path="/product/:productId" element={<ShowProduct />} />
         <Route path="/forgetpassword" element={<ForgetPassword />} />
         <Route path="/users/password/edit" element={<ResetPassword />} />
-        <Route path="/datavisualisation" element={<Dashboard/>}/>
+        <Route path="/data" element={<Dashboard/>}/>
       </Routes>
       <Cookie/>
       <Footer />

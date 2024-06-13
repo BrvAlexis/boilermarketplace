@@ -1,6 +1,11 @@
 import React,{useEffect, useState} from 'react'
 import MetricsProduct from './metricsProduct';
+import WeeklyCreationsChart from './weeklyCreationsChart.jsx'
+import PriceChart from './PriceChart.jsx'
+
 import { getData } from "../service/apiManager.js";
+
+import { Grid, Card, CardContent, Typography, Container } from '@mui/material';
 
 function dashboard() {
   const[user, setUser] = useState([]);
@@ -16,6 +21,7 @@ function dashboard() {
         console.error(error);
       }
     };
+    // For the moment i dont use it
     const profileData = async() => {
       try{
         const data = await getData(`/users`);
@@ -29,16 +35,35 @@ function dashboard() {
     productData();
   }, [])
   
-  
+const sortByDate = (a, b) => {
+    return new Date(a.created_at) - new Date(b.created_at);
+};
 
   return (
-    <div>
-      <h1>dashboard</h1>
-      <h2>Métriques globale</h2>
-      {product && <MetricsProduct data={product} />}
-      <h2>Créations d'annonces semaine par semaine</h2>
-      <h2>Graphique des prix des annonces</h2>
-      </div>
+    <Container>
+      <Typography variant="h3" gutterBottom>
+        Métriques globales
+      </Typography>
+      <Grid container spacing={2}>
+        <MetricsProduct data={product} />
+      </Grid>
+      <Typography variant="h3" gutterBottom>
+        Créations d'annonces semaine par semaine
+      </Typography>
+      <Card>
+        <CardContent>
+          <WeeklyCreationsChart data={product.sort(sortByDate)} />
+        </CardContent>
+      </Card>
+      <Typography variant="h3" gutterBottom>
+        Graphique des prix des annonces
+      </Typography>
+      <Card>
+        <CardContent>
+          <PriceChart data={product} />
+        </CardContent>
+      </Card>
+    </Container>
   )
 }
 
