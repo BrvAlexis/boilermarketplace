@@ -23,28 +23,39 @@ export default function FormProduct({
   onDelete,
   productId,
   initialData,
-  setAdData,
+  setAdData: setAdDataProp,
 }) {
   const [adData, setAdDataState] = useState(initialData || {});
-
+  const [image, setImage] = useState(null);
+  const [loadingImage, setLoadingImage] = useState(false);
   useEffect(() => {
     setAdDataState(initialData || {});
   }, [initialData]);
-
   const isEditing = !!productId;
-
   const handleInputChange = (e) => {
     const { name, value, checked, type } = e.target;
     const newAdData = {
       ...adData,
       [name]: type === "checkbox" ? checked : value,
     };
-    setAdData(newAdData);
     setAdDataState(newAdData);
+    setAdDataProp(newAdData);
   };
-
+  const handleImageUpload = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      let img = event.target.files[0];
+      setImage(URL.createObjectURL(img));
+      setLoadingImage(true);
+  
+      // Store the blob in adData
+      setAdDataState(prevAdData => ({ ...prevAdData, image: img }));
+      setLoadingImage(false);
+    }
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(adData);
+    console.log(image);
     onSubmit(adData);
   };
 
@@ -67,6 +78,10 @@ export default function FormProduct({
             ? "Modifier une annonce immobilière"
             : "Créer une annonce immobilière"}
         </Typography>
+
+        {image && (
+          <img src={image} alt="Uploaded" style={{ width: '100%', height: 'auto' }} />
+        )}
 
         {!isEditing && (
           <FormControl component="fieldset" sx={{ mt: 2 }}>
@@ -91,6 +106,21 @@ export default function FormProduct({
           </FormControl>
         )}
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <FormControl component="fieldset" sx={{ mt: 2 }}>
+            <FormLabel component="legend">Upload Image</FormLabel>
+            <input
+              accept="image/*"
+              id="contained-button-file"
+              type="file"
+              hidden
+              onChange={handleImageUpload}
+            />
+            <label htmlFor="contained-button-file">
+              <Button variant="contained" component="span">
+                Upload
+              </Button>
+            </label>
+          </FormControl>
           <TextField
             margin="normal"
             required
@@ -361,15 +391,17 @@ export default function FormProduct({
             </RadioGroup>
           </FormControl>
 
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-            onClick={handleSubmit}
-          >
-            {isEditing ? "Modifier l'annonce" : "Publier l'annonce"}
-          </Button>
+          {!loadingImage && (
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              onClick={handleSubmit}
+            >
+              {isEditing ? "Modifier l'annonce" : "Publier l'annonce"}
+            </Button>
+          )}
           {isEditing && (
             <Button
               fullWidth

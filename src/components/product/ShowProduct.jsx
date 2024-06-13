@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getData } from "../service/apiManager.js";
-import { Container, Typography, Box, Button, Paper, Grid } from '@mui/material';
+import { Container,CardMedia, Typography, Box, Button, Paper, Grid } from '@mui/material';
 import { BrowserRouter as Router, Route, Link, useParams } from "react-router-dom";
 import { useAtom } from 'jotai';
 import { userAtom } from '../atom/atom.js';
@@ -30,6 +30,12 @@ function ShowProduct() {
     <Container maxWidth="md" sx={{ mt: 4 }}>
       <Paper elevation={3} sx={{ p: 4, mb: 4 }}>
         <Box sx={{ mb: 3 }}>
+        <CardMedia
+                  component="img"
+                  height="200"
+                  image={product.image_url} // replace with the path to the image
+                  alt={product.title}
+                />
           <Typography variant="h3" component="h1" gutterBottom sx={{ whiteSpace: 'pre-wrap', overflow: 'hidden' }}>
             {product.title}
           </Typography>

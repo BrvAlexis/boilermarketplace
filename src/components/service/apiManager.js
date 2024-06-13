@@ -3,6 +3,7 @@ import Cookies from 'js-cookie';
 
 const baseUrl = 'http://localhost:3000';
 
+
 function getHeaders() {
     const authToken = Cookies.get("token");
     const headers = {
@@ -30,6 +31,45 @@ export async function postData(objectUrl,body){
         json: body,
     }).json();
     return json;
+}
+
+export async function postDataWithFile(objectUrl, data) {
+  const authToken = Cookies.get("token")
+  console.log(baseUrl + objectUrl, data);
+  console.log(authToken);
+
+  // Create a new FormData instance
+  const formData = new FormData();
+
+  // Add all properties from data to formData
+  for (const property in data) {
+    if (property === 'product') {
+      for (const subProperty in data[property]) {
+        formData.append(`${property}[${subProperty}]`, data[property][subProperty]);
+      }
+    } else {
+      formData.append(property, data[property]);
+    }
+  }
+  //to see what is insid ehte formdata
+  for (var pair of formData.entries()) {
+    console.log(pair[0]+ ', ' + pair[1]); 
+  }
+  const response = await fetch(baseUrl + objectUrl, {
+    method: 'POST',
+    headers: {
+      "Authorization": `Bearer ${authToken}`,
+    },
+    body: formData, // Pass formData as body
+  });
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+
+  const json = await response.json();
+
+  return json;
 }
 
 export async function signData(objectUrl,body){

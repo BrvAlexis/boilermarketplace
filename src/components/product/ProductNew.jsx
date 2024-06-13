@@ -1,4 +1,5 @@
-import { postData } from "../service/apiManager";
+import { useState, useEffect } from "react";
+import { postData, postDataWithFile } from "../service/apiManager";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAtom } from "jotai";
@@ -7,27 +8,28 @@ import FormProduct from "./FormProduct";
 
 export default function CreateRealEstateAd() {
   const [user] = useAtom(userAtom);
+  const [adData, setAdData] = useState({});
   const navigate = useNavigate();
 
-  const handleSubmit = async (adData) => {
+  const handleSubmit = async () => {
     event.preventDefault();
-    // Vérifiez si l'utilisateur est connecté avant de continuer
+    console.log(adData);
+    // V├®rifiez si l'utilisateur est connect├® avant de continuer
     if (!user.isLoggedIn) {
-      toast.error("Vous devez être connecté pour effectuer cette action.");
+      toast.error("Vous devez ├¬tre connect├® pour effectuer cette action.");
       return;
     }
-
     try {
-      const response = await postData("/products", adData);
+      const response = await postDataWithFile("/products", adData);
       console.log(response);
-      toast.success("Annonce créée avec succès !", {
+      toast.success("Annonce cr├®├®e avec succ├¿s !", {
         onClose: () => navigate("/"),
       });
     } catch (error) {
       console.error("Erreur lors de la publication de l'annonce :", error);
-      toast.error("Échec de la création de l'annonce.");
+      toast.error("├ëchec de la cr├®ation de l'annonce.");
     }
   };
 
-  return <FormProduct onSubmit={handleSubmit} />;
+  return <FormProduct onSubmit={handleSubmit} setAdData={setAdData} />;
 }
