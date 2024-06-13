@@ -8,7 +8,6 @@ import FormProduct from "./FormProduct";
 
 export default function CreateRealEstateAd() {
   const [user] = useAtom(userAtom);
-  const [adData, setAdData] = useState({});
   const navigate = useNavigate();
   const [adData, setAdData] = useState({
     title: "",
@@ -46,7 +45,7 @@ export default function CreateRealEstateAd() {
       const response = await postData("/products", adData);
       console.log(response);
       toast.success("Annonce créée avec succès !", {
-        onClose: () => navigate(`/imagenew/${response.id}`),
+        onClose: () => navigate('/'),
       });
     } catch (error) {
       console.error("Erreur lors de la publication de l'annonce :", error);

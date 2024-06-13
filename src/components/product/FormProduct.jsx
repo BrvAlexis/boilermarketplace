@@ -388,15 +388,7 @@ export default function FormProduct({
           </Button>
           {isEditing && (
             <>
-              <Button
-                fullWidth
-                variant="contained"
-                color="primary"
-                sx={{ mb: 2 }}
-                onClick={() => navigate(`/imagenew/${productId}`)} // Utilisez l'ID du produit pour naviguer
-              >
-                Modifier les images
-              </Button>
+              
               <Button
                 fullWidth
                 variant="contained"
