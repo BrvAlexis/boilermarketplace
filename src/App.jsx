@@ -18,6 +18,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Profile from './components/user/Profile.jsx';
 import EditProfile from './components/user/EditProfile.jsx';
+import Dashboard from './components/admin/dashboard.jsx';
 
 import ShowProduct from './components/product/ShowProduct.jsx';
 
@@ -60,7 +61,7 @@ function App() {
         <Route path="/product/:productId" element={<ShowProduct />} />
         <Route path="/forgetpassword" element={<ForgetPassword />} />
         <Route path="/users/password/edit" element={<ResetPassword />} />
-
+        <Route path="/data" element={<Dashboard/>}/>
       </Routes>
       <Cookie/>
       <Footer />

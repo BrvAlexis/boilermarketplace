@@ -12,8 +12,6 @@ import FacebookIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import TwitterIcon from '@mui/icons-material/X';
 
-
-
 function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" mt={1}>
@@ -93,8 +91,8 @@ export default function Footer() {
           <Typography variant="body2" fontWeight={600}>
             Product
           </Typography>
-          <Link color="text.secondary" href="#">
-            Features
+          <Link color="text.secondary" href="/data">
+            Datas
           </Link>
           <Link color="text.secondary" href="#">
             Testimonials
