@@ -4,8 +4,8 @@ import { Typography } from '@mui/material';
 
 const HeroSection = () => {
   return (
-      <div className='hero'>
-        <div>
+      <div className='jumbotron'>
+        <div className='text-hero'>
           <Typography
             component="h1"
             variant="h2"
@@ -14,7 +14,7 @@ const HeroSection = () => {
           >
             Bienvenue sur notre site
           </Typography>
-          <Typography variant="h5" paragraph >
+          <Typography variant="h5" paragraph>
             Découvrez nos immobiliers frais et certifiés.
           </Typography>
         </div>

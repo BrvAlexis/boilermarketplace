@@ -113,7 +113,7 @@ function ShowProduct() {
 
       <Paper elevation={3} sx={{ p: 4 }}>
         <Box sx={{ mb: 3 }}>
-          <Map address="14 Rue de l'Ange Gardien, 17000 La Rochelle" />
+          <Map adress={product.city} />
         </Box>
       </Paper>
     </Container>

@@ -89,7 +89,7 @@ export default function Map({adress}) {
       //use this functoin if need a pop up on click
       // mapInstanceRef.current.on('click', onMapClick);
     }
-  }, []);
+  }, [adress]);
 
   const handleItineraire = () => {
     if (markerPosition) {
@@ -101,7 +101,7 @@ export default function Map({adress}) {
 
 
   return(
-    <>
+    <Box>
       <Box sx={{ mb: 3 }}>
         <h2>Position of the good</h2>
         <Button variant="outlined" color="primary" onClick={handleItineraire}>Itinéraire</Button>
@@ -109,6 +109,6 @@ export default function Map({adress}) {
       <Box sx={{ mb: 3 }}>
         <div ref={mapRef} style={{height:"300px"}}></div>
       </Box>
-    </>
+    </Box>
   )
 }
