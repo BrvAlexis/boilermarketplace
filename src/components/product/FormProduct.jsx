@@ -27,7 +27,7 @@ export default function FormProduct({
   setAdData,
 }) {
   const [adData, setAdDataState] = useState(initialData || {});
-  const navigate = useNavigate();
+  console.log(initialData);
 
   useEffect(() => {
     setAdDataState(initialData || {});
@@ -45,9 +45,15 @@ export default function FormProduct({
     setAdDataState(newAdData);
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setAdData({ ...adData, image: file });
+    setAdDataState({ ...adData, image: file });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(adData);
+    onSubmit({ product: adData });
   };
 
   return (
@@ -362,6 +368,14 @@ export default function FormProduct({
               <FormControlLabel value="G" control={<Radio />} label="G" />
             </RadioGroup>
           </FormControl>
+
+          <input
+            type="file"
+            id="image"
+            name="image"
+            accept="image/*"
+            onChange={handleImageChange}
+          />
 
             <Button
             type="submit"
