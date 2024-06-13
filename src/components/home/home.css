@@ -1,0 +1,11 @@
+.main_home{
+  /* Set the width to 100% to make the component fit within its container */
+  width: 100%;
+
+  /* Reset the margin */
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
