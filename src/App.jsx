@@ -24,6 +24,8 @@ import { useAtomValue } from 'jotai';
 import { userAtom } from './components/atom/atom';
 import Home from './components/home/Home.jsx';
 
+import Cookie from './components/cookie/cookie.jsx'
+
 const PrivateRoute = ({ children }) => {
 
   const currentUser = useAtomValue(userAtom);
@@ -58,6 +60,7 @@ function App() {
         <Route path="/users/password/edit" element={<ResetPassword />} />
 
       </Routes>
+      <Cookie/>
       <Footer />
     </BrowserRouter>
   );
