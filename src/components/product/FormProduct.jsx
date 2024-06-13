@@ -23,40 +23,49 @@ export default function FormProduct({
   onDelete,
   productId,
   initialData,
-  setAdData: setAdDataProp,
+  setAdData,
 }) {
   const [adData, setAdDataState] = useState(initialData || {});
-  const [image, setImage] = useState(null);
-  const [loadingImage, setLoadingImage] = useState(false);
+  const [image,setImage] = useState("")
+  console.log(initialData);
+
   useEffect(() => {
     setAdDataState(initialData || {});
   }, [initialData]);
+
   const isEditing = !!productId;
+
   const handleInputChange = (e) => {
     const { name, value, checked, type } = e.target;
     const newAdData = {
       ...adData,
       [name]: type === "checkbox" ? checked : value,
     };
+    setAdData(newAdData);
     setAdDataState(newAdData);
-    setAdDataProp(newAdData);
   };
-  const handleImageUpload = (event) => {
-    if (event.target.files && event.target.files[0]) {
-      let img = event.target.files[0];
-      setImage(URL.createObjectURL(img));
-      setLoadingImage(true);
   
-      // Store the blob in adData
-      setAdDataState(prevAdData => ({ ...prevAdData, image: img }));
-      setLoadingImage(false);
-    }
+  // const handleImageUpload = (event) => {
+  //   if (event.target.files && event.target.files[0]) {
+  //     let img = event.target.files[0];
+  //     setImage(URL.createObjectURL(img));
+  //     setLoadingImage(true);
+  
+  //     // Store the blob in adData
+  //     setAdDataState(prevAdData => ({ ...prevAdData, image: img }));
+  //     setLoadingImage(false);
+  //   }
+  // };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setAdData({ ...adData, image: file });
+    setAdDataState({ ...adData, image: file });
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(adData);
-    console.log(image);
-    onSubmit(adData);
+    onSubmit({ product: adData });
   };
 
   return (
@@ -106,7 +115,7 @@ export default function FormProduct({
           </FormControl>
         )}
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-          <FormControl component="fieldset" sx={{ mt: 2 }}>
+          {/* <FormControl component="fieldset" sx={{ mt: 2 }}>
             <FormLabel component="legend">Upload Image</FormLabel>
             <input
               accept="image/*"
@@ -120,7 +129,7 @@ export default function FormProduct({
                 Upload
               </Button>
             </label>
-          </FormControl>
+          </FormControl> */}
           <TextField
             margin="normal"
             required
@@ -391,17 +400,23 @@ export default function FormProduct({
             </RadioGroup>
           </FormControl>
 
-          {!loadingImage && (
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              onClick={handleSubmit}
-            >
-              {isEditing ? "Modifier l'annonce" : "Publier l'annonce"}
-            </Button>
-          )}
+          <input
+            type="file"
+            id="image"
+            name="image"
+            accept="image/*"
+            onChange={handleImageChange}
+          />
+
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+            onClick={handleSubmit}
+          >
+            {isEditing ? "Modifier l'annonce" : "Publier l'annonce"}
+          </Button>
           {isEditing && (
             <Button
               fullWidth
