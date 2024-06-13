@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import {
   Avatar,
   Button,
@@ -26,6 +27,7 @@ export default function FormProduct({
   setAdData,
 }) {
   const [adData, setAdDataState] = useState(initialData || {});
+  const navigate = useNavigate();
 
   useEffect(() => {
     setAdDataState(initialData || {});
@@ -361,7 +363,7 @@ export default function FormProduct({
             </RadioGroup>
           </FormControl>
 
-          <Button
+            <Button
             type="submit"
             fullWidth
             variant="contained"
@@ -371,15 +373,32 @@ export default function FormProduct({
             {isEditing ? "Modifier l'annonce" : "Publier l'annonce"}
           </Button>
           {isEditing && (
-            <Button
-              fullWidth
-              variant="contained"
-              color="error"
-              sx={{ mb: 2 }}
-              onClick={onDelete}
-            >
-              Supprimer l'annonce
-            </Button>
+            <>
+              <Button
+                fullWidth
+                variant="contained"
+                color="primary"
+                sx={{ mb: 2 }}
+                onClick={() => navigate(`/imagenew/${productId}`)} // Utilisez l'ID du produit pour naviguer
+              >
+                Modifier les images
+              </Button>
+              <Button
+                fullWidth
+                variant="contained"
+                color="error"
+                sx={{ mb: 2 }}
+                onClick={onDelete}
+              >
+                Supprimer l'annonce
+              </Button>
+                            {adData.image_url && (
+                <Box sx={{ my: 2 }}>
+                  <img src={`http://localhost:3000${adData.image_url}`} alt="Image du produit" style={{ maxWidth: '100%', height: 'auto' }} />
+                </Box>
+              )}
+              
+            </>
           )}
         </Box>
       </Box>

@@ -4,15 +4,46 @@ import Cookies from 'js-cookie';
 const baseUrl = 'http://localhost:3000';
 
 function getHeaders() {
-    const authToken = Cookies.get("token");
+  const authToken = Cookies.get("token");
     const headers = {
         "Content-Type": "application/json"
     };
-    if (authToken) {
+  if (authToken) {
         headers['Authorization'] = authToken;
-    }
-    return headers;
+  }
+  return headers;
 }
+
+export async function imageUpdate(objectUrl, file) {
+  try {
+    const formData = new FormData();
+    formData.append('image', file);
+
+    // Récupérez le token d'authentification depuis les cookies
+    const authToken = Cookies.get("token");
+
+    // Définissez les en-têtes directement dans la requête
+    const headers = {
+      "Authorization": `Bearer ${authToken}`
+    };
+
+    const response = await ky.patch(baseUrl + objectUrl, {
+      headers: headers,
+      body: formData
+    });
+
+    if (response.ok) {
+      return response.json();
+    } else {
+      console.error('Erreur lors de l\'upload de l\'image');
+      return null;
+    }
+  } catch (error) {
+    console.error('Erreur lors de l\'envoi de l\'image :', error);
+    throw error;
+  }
+}
+
 export async function getData(objectUrl,body){
     console.log(objectUrl);
     const json = await ky.get(baseUrl + objectUrl, 
