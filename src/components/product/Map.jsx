@@ -21,6 +21,7 @@ export default function Map({adress}) {
   const getLatLon = async () => {
     const apiKey = import.meta.env.VITE_REACT_APP_GOOGLE_API_KEY;
     const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${adress}&key=${apiKey}`;
+    console.log(import.meta.env.VITE_REACT_APP_GOOGLE_API_KEY);
   
     try {
       const response = await fetch(url);
