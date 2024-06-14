@@ -1,7 +1,7 @@
 import ky from "ky";
 import Cookies from "js-cookie";
 
-const baseUrl = "http://localhost:3000";
+const baseUrl = "https://rails-back-group.fly.dev";
 
 function getHeaders() {
   const authToken = Cookies.get("token");

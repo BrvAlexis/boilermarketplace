@@ -27,7 +27,7 @@ function ShowProduct() {
   }, [productId]);
 
   // Utilisez l'URL complète pour l'attribut src de l'image
-  const imageUrl = `http://localhost:3000${product.image_url}`;
+  const imageUrl = `https://rails-back-group.fly.dev${product.image_url}`;
   console.log(product.image_url)
 
   return (
