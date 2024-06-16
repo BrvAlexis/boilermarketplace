@@ -51,23 +51,18 @@ export async function postDataWithFile(objectUrl, data) {
   // Add all properties from data to formData
   for (const property in data) {
     console.log(property);
-    // console.log(property, data[property])
-    if (property === 'product') {
-      for (const subProperty in data[property]) {
-        formData.append(`${property}[${subProperty}]`, data[property][subProperty]);
-      }
-    } else {
-      formData.append(property, data[property]);
-    }
+    console.log(data);
+      formData.append(`product[${property}]`, data[property]);
   }
   //to see what is insid ehte formdata
-  // for (var pair of formData.entries()) {
-  //   console.log(pair[0]+ ', ' + pair[1]); 
-  // }
+  for (var pair of formData.entries()) {
+    console.log(pair[0]+ ', ' + pair[1]); 
+  }
+
   const response = await fetch(baseUrl + objectUrl, {
     method: 'POST',
     headers: {
-      "Authorization": `Bearer ${authToken}`,
+      "Authorization": `${authToken}`,
     },
     body: formData, // Pass formData as body
   });
@@ -77,7 +72,7 @@ export async function postDataWithFile(objectUrl, data) {
   }
 
   const json = await response.json();
-
+  console.log(json);
   return json;
 }
 
